@@ -1,1 +1,11 @@
-<view>TEST【0305，19：29】</view>
+<!-- 轮播图 -->
+<view class="banner">
+        <swiper class="banner-swiper" autoplay indicator-dots circular indicator-color='#FFFFF' interval='3000'>
+            <swiper-item class="banner-swiper-item">
+                <image class="banner-image" src="/images/banner/banner1.png" mode='widthFix' />
+            </swiper-item>
+            <swiper-item class="banner-swiper-item">
+                <image class="banner-image" src="/images/banner/banner2.png" mode='widthFix' />
+            </swiper-item>
+        </swiper>
+</view>
