@@ -26,7 +26,7 @@ const getMiniProgramCode = async () => {
   const upload = await cloud.uploadFile({
     cloudPath: "code.png",
     fileContent: buffer,
-  });
+  });   
   return upload.fileID;
 };
 

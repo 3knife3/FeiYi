@@ -1,11 +1,26 @@
 <!-- 轮播图 -->
 <view class="banner">
-        <swiper class="banner-swiper" autoplay indicator-dots circular indicator-color='#FFFFF' interval='3000'>
-            <swiper-item class="banner-swiper-item">
-                <image class="banner-image" src="/images/banner/banner1.png" mode='widthFix' />
-            </swiper-item>
-            <swiper-item class="banner-swiper-item">
-                <image class="banner-image" src="/images/banner/banner2.png" mode='widthFix' />
-            </swiper-item>
-        </swiper>
+  <swiper class="banner-swiper" autoplay indicator-dots circular indicator-color='#FFFFF' interval='3000' duration="1000">
+      <swiper-item wx:for="{{swiperList}}" wx:key="index" class="banner-swiper-item">
+        <image src="{{item.imgUrl}}" mode="aspectFill" class="banner-image"/>
+      </swiper-item>
+  </swiper>
+</view>
+
+<view class="function-grid">
+  <view class="grid-item" wx:for="{{functionList}}" wx:key="name" bindtap="navigateToPage" data-name="{{item.name}}">
+    <image class="item-icon" src="{{item.icon}}" mode="aspectFill"></image>
+    <text class="item-text">{{item.name}}</text>
+  </view>
+</view>
+
+<!-- 3. 首页地图显示区域（路径：images/map/map.jpg） -->
+<!-- 首页地图区域 -->
+<!-- 首页地图区域 -->
+<view class="map-box">
+  <text class="map-title">地图区域</text>
+  <view class="map-preview" bindtap="previewMap">
+    <image class="map-img" src="/images/map/map.jpg"></image>
+    <text class="map-tip">点击放大</text>
+  </view>
 </view>
