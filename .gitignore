@@ -1,0 +1,18 @@
+# 小程序构建产物
+miniprogram_npm/
+
+# npm 依赖文件夹
+node_modules/
+
+# 微信开发者工具生成的缓存文件
+.DS_Store
+.project
+.svn/
+.git/
+.idea/
+*.log
+tmp/
+
+# 环境变量文件（如果有）
+.env
+.env.local

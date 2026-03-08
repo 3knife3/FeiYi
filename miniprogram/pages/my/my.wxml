@@ -1,2 +1,26 @@
 <!--pages/my/my.wxml-->
-<text>pages/my/my.wxml</text>
+<block wx:if="{{userInfo==null}}">
+    <view class="login-area">
+        <button class="btn" bind:tap="goLogin">点击登录</button>
+    </view>
+</block>
+<block wx:else>
+    <view class="container">
+        <view class="top-view">
+            <view class="user">
+                <view class="row">
+                    <image class="avatar" src="{{userInfo.avatar}}"></image>
+                    <view class="name">
+                        <view bind:tap="logout">{{userInfo.name}}</view>
+                    </view>
+                </view>
+            </view>
+            <view class="numbers">
+                <view class="row">
+                    <text>{{userInfo.score}}</text>
+                    <text>积分</text>
+                </view>
+            </view>
+        </view>
+    </view>
+</block>
