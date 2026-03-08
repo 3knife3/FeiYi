@@ -1,2 +1,52 @@
-<!--pages/science/science.wxml-->
-<text>pages/science/science.wxml</text>
+<view class="container">
+  <!-- 顶部栏目切换 -->
+  <view class="tabs">
+    <view 
+      class="tab {{currentTab === 'scenery' ? 'active' : ''}}"
+      bindtap="switchTab"
+      data-tab="scenery"
+    >
+      景点
+    </view>
+    <view 
+      class="tab {{currentTab === 'food' ? 'active' : ''}}"
+      bindtap="switchTab"
+      data-tab="food"
+    >
+      美食
+    </view>
+    <view 
+      class="tab {{currentTab === 'entertainment' ? 'active' : ''}}"
+      bindtap="switchTab"
+      data-tab="entertainment"
+    >
+      娱乐
+    </view>
+  </view>
+
+  <!-- 轮播图区域 -->
+  <swiper 
+    class="swiper"
+    indicator-dots
+    circular
+    autoplay="false"
+    bindchange="onSwiperChange"
+  >
+    <block wx:for="{{bannerList}}" wx:key="index">
+      <swiper-item>
+        <image 
+          src="{{item.image}}" 
+          class="swiper-image"
+          bindtap="goToDetail"
+          data-id="{{item.id}}"
+        />
+      </swiper-item>
+    </block>
+  </swiper>
+
+  <!-- 标题 + 文字 -->
+  <view class="content-box">
+    <text class="title">{{currentBanner.title}}</text>
+    <text class="desc">{{currentBanner.desc}}</text>
+  </view>
+</view>

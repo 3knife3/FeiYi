@@ -6,5 +6,23 @@ Page({
           name:'Yeonjun',
           score:'913'
       },
+      showContact:false
     },
+
+    goToOrder(){
+        wx.navigateTo({
+          url: '/pages/order/order',
+        })
+    },
+
+    showContact(){
+        this.setData({
+            showContact:true
+        })
+    },
+    onConfirm(){
+        this.setData({
+            showContact:false
+        })
+    }
   })

@@ -1,16 +1,10 @@
 // app.js
 App({
-  onLaunch: function () {
-    this.globalData = {
-      env: "",
-    };
-    if (!wx.cloud) {
-      console.error("请使用 2.2.3 或以上的基础库以使用云能力");
-    } else {
+    onLaunch() {
+      // 初始化云开发（替换成你的云环境ID！）
       wx.cloud.init({
-        env: this.globalData.env,
-        traceUser: true,
-      });
+        env: "你的云开发环境ID", // 比如：env-xxxxxxx
+        traceUser: true // 跟踪用户行为，可选
+      })
     }
-  },
-});
+  })

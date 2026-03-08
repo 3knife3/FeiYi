@@ -22,5 +22,11 @@
                 </view>
             </view>
         </view>
+        <view class="choice">
+         <van-cell class="choice-item" title="积分兑换记录" is-link bind:tap="goToOrder" />
+         <van-cell title="关于我们" is-link bind:tap="showContact" />
+         <van-dialog title="关于我们" message="本小程序由学生团队开发。" show="{{showContact}}" bind:confirm="onConfirm">
+         </van-dialog>
+        </view>
     </view>
 </block>
