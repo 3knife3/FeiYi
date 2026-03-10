@@ -1,10 +1,8 @@
 Page({
     data: {
-      currentTab: "scenery", // 当前栏目：scenery/food/entertainment
-      bannerList: [], // 当前轮播数据
-      currentBanner: {}, // 当前显示的大图标题/文字
-  
-      // 三套轮播图数据（可以替换成你的图片）
+      currentTab: "scenery",
+      bannerList: [],
+      currentBanner: {},
       bannerData: {
         scenery: [
           { id: 1, image: "/images/science/sci1.png", title: "绿藻景区", desc: "绿藻景区位于XX位置，是著名的自然景观。" },
@@ -25,16 +23,16 @@ Page({
       this.initBannerList();
     },
   
-    // 初始化轮播图
     initBannerList() {
       const { currentTab, bannerData } = this.data;
+      // 增加容错：避免数据为空导致报错
+      const currentData = bannerData[currentTab] || [];
       this.setData({
-        bannerList: bannerData[currentTab],
-        currentBanner: bannerData[currentTab][0]
+        bannerList: currentData,
+        currentBanner: currentData[0] || {}
       });
     },
   
-    // 切换栏目
     switchTab(e) {
       const tab = e.currentTarget.dataset.tab;
       this.setData({
@@ -44,20 +42,21 @@ Page({
       });
     },
   
-    // 轮播滑动切换
     onSwiperChange(e) {
       const index = e.detail.current;
       const { bannerList } = this.data;
-      this.setData({
-        currentBanner: bannerList[index]
-      });
+      // 增加边界判断：防止下标越界
+      if (bannerList[index]) {
+        this.setData({
+          currentBanner: bannerList[index]
+        });
+      }
     },
   
-    // 点击进入详情页
     goToDetail(e) {
       const id = e.currentTarget.dataset.id;
       wx.navigateTo({
         url: `/pages/detail/detail?id=${id}`
       });
     }
-  })
+  });
