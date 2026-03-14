@@ -1,5 +1,6 @@
 <view class="container">
-  <!-- 顶部栏目切换 -->
+
+  <!-- 栏目 -->
   <view class="tabs">
     <view 
       class="tab {{currentTab === 'scenery' ? 'active' : ''}}"
@@ -24,7 +25,7 @@
     </view>
   </view>
 
-  <!-- 轮播图区域 -->
+  <!-- 轮播图 -->
   <swiper 
     class="swiper"
     indicator-dots
@@ -37,16 +38,16 @@
         <image 
           src="{{item.image}}" 
           class="swiper-image"
-          bindtap="goToDetail"
           data-id="{{item.id}}"
         />
       </swiper-item>
     </block>
   </swiper>
 
-  <!-- 标题 + 文字 -->
+  <!--描述-->
   <view class="content-box">
     <text class="title">{{currentBanner.title}}</text>
-    <text class="desc">{{currentBanner.desc}}</text>
+    <text class="desc">{{currentBanner.content}}</text>
   </view>
+  
 </view>

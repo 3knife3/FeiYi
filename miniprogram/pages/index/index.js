@@ -17,15 +17,25 @@ Page({
   },
   navigateToPage(e) {
     const name = e.currentTarget.dataset.name;
+    const app = getApp();
     switch(name) {
       case '科普':
-        wx.navigateTo({url: '/pages/science/science'});
+        app.globalData.scienceTab = 'scenery'; 
+        wx.switchTab({
+          url: '/pages/science/science',
+        })
         break;
       case '美食':
-        wx.navigateTo({url: '/pages/food/food'});
+        app.globalData.scienceTab = 'food'; 
+        wx.switchTab({
+          url: '/pages/science/science',
+        })
         break;  
       case '娱乐':
-        wx.navigateTo({url: '/pages/entertainment/entertainment'});
+        app.globalData.scienceTab = 'entertainment'; 
+        wx.switchTab({
+          url: '/pages/science/science',
+        })
         break;
       case '路线推荐':
         wx.navigateTo({url: '/pages/route/route'});
