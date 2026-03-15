@@ -28,35 +28,30 @@
     border-radius: 60rpx;
   }
   
-  /* ======================== */
-  /* 卡片列表样式（新增） */
-  /* ======================== */
+  /* 卡片列表 */
   .card-list {
     display: flex;
     flex-direction: column;
-    gap: 25rpx; /* 卡片之间的间距 */
+    gap: 25rpx; /* 卡片之间间隔 */
     width: 100%;
   }
-  
-  /* 单个卡片 */
+  /* 卡片 */
   .card-item {
     position: relative;
     width: 100%;
-    height: 500rpx; /* 卡片高度，可自行调整 */
-    border-radius: 60rpx; /* 沿用你喜欢的大圆角 */
+    height: 400rpx; 
+    border-radius: 60rpx; 
     overflow: hidden;
     box-sizing: border-box;
   }
-  
-  /* 卡片背景图 */
+/* 卡片背景图 */
   .card-bg {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
   }
-  
-  /* 卡片内文字区域（半透明背景，保证文字可读） */
+  /* 卡片文本 */
   .card-content {
     position: absolute;
     bottom: 0;
@@ -67,43 +62,38 @@
     color: #fff;
     box-sizing: border-box;
   }
-  
-  /* 卡片标题（沿用你原来的字体风格） */
   .card-title {
     font-size: 36rpx;
     font-weight: bold;
     display: block;
     margin-bottom: 10rpx;
   }
-  
-  /* 卡片描述（沿用你原来的字体风格） */
   .card-desc {
     font-size: 28rpx;
     line-height: 1.6;
     opacity: 0.95;
   }
 
-  
-
-
-  /* 长图弹窗 - 无动画必显示版 */
+  /* 长图弹窗 */
 .long-modal {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(0,0,0,0.95);
+    background: rgba(0,0,0,0.2);
     z-index: 99999;
   }
   .long-scroll {
     width: 100%;
     height: 100%;
-    padding: 20rpx;
+    padding: 40rpx;
     box-sizing: border-box;
   }
+  /* 长图 */
   .long-img {
     width: 100%;
     height: auto;
     display: block;
+    border-radius: 70rpx;
   }

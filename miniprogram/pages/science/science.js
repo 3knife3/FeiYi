@@ -3,7 +3,6 @@ Page({
       currentTab: "scenery",
       bannerList: [],
       currentBanner: {},
-      // 👇 只新增这 2 个弹窗变量，其他完全不动
       showModal: false,
       longImageUrl: ""
     },
@@ -72,6 +71,7 @@ Page({
       }
     },
 
+    //弹窗打开
     openLongImage(e) {
         const id = e.currentTarget.dataset.id;
         const { bannerList } = this.data;
@@ -91,6 +91,7 @@ Page({
           });
         },
   
+    // 弹窗关闭
   closeLongImage() {
     this.setData({
       showModal: false,
