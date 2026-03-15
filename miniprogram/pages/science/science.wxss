@@ -28,41 +28,82 @@
     border-radius: 60rpx;
   }
   
-  /* 轮播 */
-  .swiper {
-    height: 900rpx;
-    border-radius: 60rpx;
-    overflow: hidden;
+  /* ======================== */
+  /* 卡片列表样式（新增） */
+  /* ======================== */
+  .card-list {
+    display: flex;
+    flex-direction: column;
+    gap: 25rpx; /* 卡片之间的间距 */
     width: 100%;
   }
-  /* 轮播图片 */
-  .swiper-image {
+  
+  /* 单个卡片 */
+  .card-item {
+    position: relative;
+    width: 100%;
+    height: 500rpx; /* 卡片高度，可自行调整 */
+    border-radius: 60rpx; /* 沿用你喜欢的大圆角 */
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+  
+  /* 卡片背景图 */
+  .card-bg {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
   }
   
-  /* 描述 */
-  .content-box {
-    margin-top: 30rpx;
-    padding: 20rpx;
-    background: #fff;
-    border-radius: 12rpx;
+  /* 卡片内文字区域（半透明背景，保证文字可读） */
+  .card-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 40rpx 30rpx;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.6));
+    color: #fff;
     box-sizing: border-box;
-    width: 100%;
   }
-  /* 描述标题 */
-  .title {
+  
+  /* 卡片标题（沿用你原来的字体风格） */
+  .card-title {
     font-size: 36rpx;
     font-weight: bold;
-    color: #333;
     display: block;
     margin-bottom: 10rpx;
   }
-  /* 描述详细介绍 */
-  .desc {
+  
+  /* 卡片描述（沿用你原来的字体风格） */
+  .card-desc {
     font-size: 28rpx;
-    color: #666;
     line-height: 1.6;
+    opacity: 0.95;
+  }
+
+  
+
+
+  /* 长图弹窗 - 无动画必显示版 */
+.long-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.95);
+    z-index: 99999;
+  }
+  .long-scroll {
+    width: 100%;
+    height: 100%;
+    padding: 20rpx;
+    box-sizing: border-box;
+  }
+  .long-img {
+    width: 100%;
+    height: auto;
+    display: block;
   }

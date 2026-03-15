@@ -3,20 +3,9 @@ Page({
       currentTab: "scenery",
       bannerList: [],
       currentBanner: {},
-    //   bannerData: {
-    //     scenery: [
-    //       { id: 1, image: "/images/science/sci1.png", title: "绿藻景区", desc: "绿藻景区位于XX位置，是著名的自然景观。" },
-    //       { id: 2, image: "/images/science/sci2.png", title: "森林公园", desc: "森林公园拥有大片植被与湖泊，适合郊游。" }
-    //     ],
-    //     food: [
-    //       { id: 1, image: "/images/science/sci3.png", title: "特色美食", desc: "本地特色美食包括烤鱼、面食、小吃。本地特色美食包括烤鱼、面食、小吃。本地特色美食包括烤鱼、面食、小吃。本地特色美食包括烤鱼、面食、小吃。本地特色美食包括烤鱼、面食、小吃。本地特色美食包括烤鱼、面食、小吃。" },
-    //       { id: 2, image: "/images/science/sci1.png", title: "美味佳肴", desc: "本地美味佳肴非常受欢迎，口感独特。" }
-    //     ],
-    //     entertainment: [
-    //       { id: 1, image: "/images/science/sci2.png", title: "娱乐项目", desc: "娱乐项目包括游船、攀岩、骑行等。" },
-    //       { id: 2, image: "/images/science/sci3.png", title: "休闲体验", desc: "休闲体验适合全家游玩，轻松愉快。" }
-    //     ]
-    //   }
+      // 👇 只新增这 2 个弹窗变量，其他完全不动
+      showModal: false,
+      longImageUrl: ""
     },
   
     loadDataFromDB() {
@@ -49,7 +38,6 @@ Page({
         this.setData({
           currentTab: targetTab
         }, () => {
-        //   this.initBannerList();
           this.loadDataFromDB();
         });
       },
@@ -73,7 +61,7 @@ Page({
       });
     },
   
-    // 滑动轮播图片跳转
+    // 滑动轮播图片跳转（保留，不影响）
     onSwiperChange(e) {
       const index = e.detail.current;
       const { bannerList } = this.data;
@@ -82,5 +70,31 @@ Page({
           currentBanner: bannerList[index]
         });
       }
-    }
+    },
+
+    openLongImage(e) {
+        const id = e.currentTarget.dataset.id;
+        const { bannerList } = this.data;
+        const item = bannerList.find(i => i.id === id);
+
+        console.log("长图地址 =", item?.longImage); // 👈 大写 L
+      
+        if (!item || !item.longImage) {
+            wx.showToast({ title: '暂无长图介绍', icon: 'none' });
+            return;
+          }
+        
+          // 直接赋值本地路径，去掉所有云调用代码
+          this.setData({
+            showModal: true,
+            longImageUrl: item.longImage
+          });
+        },
+  
+  closeLongImage() {
+    this.setData({
+      showModal: false,
+      longImageUrl: ""
+    });
+  }
 })

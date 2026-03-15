@@ -1,53 +1,52 @@
 <view class="container">
 
-  <!-- 栏目 -->
-  <view class="tabs">
-    <view 
-      class="tab {{currentTab === 'scenery' ? 'active' : ''}}"
-      bindtap="switchTab"
-      data-tab="scenery"
-    >
-      景点
-    </view>
-    <view 
-      class="tab {{currentTab === 'food' ? 'active' : ''}}"
-      bindtap="switchTab"
-      data-tab="food"
-    >
-      美食
-    </view>
-    <view 
-      class="tab {{currentTab === 'entertainment' ? 'active' : ''}}"
-      bindtap="switchTab"
-      data-tab="entertainment"
-    >
-      娱乐
-    </view>
-  </view>
-
-  <!-- 轮播图 -->
-  <swiper 
-    class="swiper"
-    indicator-dots
-    circular
-    autoplay="false"
-    bindchange="onSwiperChange"
+<!-- 栏目 -->
+<view class="tabs">
+  <view 
+    class="tab {{currentTab === 'scenery' ? 'active' : ''}}"
+    bindtap="switchTab"
+    data-tab="scenery"
   >
-    <block wx:for="{{bannerList}}" wx:key="index">
-      <swiper-item>
-        <image 
-          src="{{item.image}}" 
-          class="swiper-image"
-          data-id="{{item.id}}"
-        />
-      </swiper-item>
-    </block>
-  </swiper>
-
-  <!--描述-->
-  <view class="content-box">
-    <text class="title">{{currentBanner.title}}</text>
-    <text class="desc">{{currentBanner.content}}</text>
+    景点
   </view>
-  
+  <view 
+    class="tab {{currentTab === 'food' ? 'active' : ''}}"
+    bindtap="switchTab"
+    data-tab="food"
+  >
+    美食
+  </view>
+  <view 
+    class="tab {{currentTab === 'entertainment' ? 'active' : ''}}"
+    bindtap="switchTab"
+    data-tab="entertainment"
+  >
+    娱乐
+  </view>
+</view>
+
+<!-- 卡片列表（替换原来的轮播图 + 描述） -->
+<view class="card-list">
+  <block wx:for="{{bannerList}}" wx:key="id">
+    <view class="card-item" bindtap="openLongImage" data-id="{{item.id}}">
+      <!-- 卡片背景图 -->
+      <image src="{{item.image}}" class="card-bg"></image>
+      <!-- 卡片内文字：标题 + 描述（用你原来的变量名） -->
+      <view class="card-content">
+        <text class="card-title">{{item.title}}</text>
+        <text class="card-desc">{{item.content}}</text>
+      </view>
+    </view>
+  </block>
+</view>
+
+</view>
+
+
+
+<!-- 长图弹窗 → 无动画必显示版 -->
+<view wx:if="{{showModal}}" class="long-modal" bindtap="closeLongImage">
+  <scroll-view class="long-scroll" scroll-y>
+    <image src="{{longImageUrl}}" class="long-img" mode="widthFix"></image>
+  </scroll-view>
 </view>
