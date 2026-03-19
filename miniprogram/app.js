@@ -7,6 +7,8 @@ App({
       })
     },
     globalData: {
-      scienceTab: "scenery"
+      scienceTab: "scenery",
+      isLogin: false,
+      userInfo: null
     }
   })
