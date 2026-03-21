@@ -1,2 +1,96 @@
 <!--pages/route/route.wxml-->
-<text>pages/route/route.wxml</text>
+<!-- 景区路线推荐页面 -->
+<view class="container">
+  <!-- 顶部标题 -->
+  <view class="header">
+    <text class="title">路线推荐</text>
+    <text class="sub">发现适合你的玩法</text>
+  </view>
+
+  <!-- 搜索框 -->
+  <view class="search-box" bindtap="focusSearch">
+    <text class="icon">🔍</text>
+    <input 
+      type="text" 
+      placeholder="搜索景点或路线关键词" 
+      placeholder-class="placeholder"
+      value="{{searchKeyword}}"
+      bindinput="onSearchInput"
+      bindconfirm="handleSearch"
+    />
+  </view>
+
+  <!-- 分类筛选标签 (亲子/朋友/情侣/家人) -->
+  <view class="filter-section">
+    <view class="section-title">👥 游玩类型</view>
+    <view class="tag-list">
+      <view 
+        wx:for="{{categoryTags}}" 
+        wx:key="index"
+        class="tag-item {{currentCategory === item.value ? 'active' : ''}}"
+        data-category="{{item.value}}"
+        bindtap="selectCategory"
+      >
+        {{item.label}}
+      </view>
+    </view>
+  </view>
+
+  <!-- 路线列表 -->
+  <view class="route-list">
+    <block wx:if="{{filteredRoutes.length > 0}}">
+      <view 
+        class="route-card" 
+        wx:for="{{filteredRoutes}}" 
+        wx:key="id"
+        data-route="{{item}}"
+        bindtap="openRouteDetail"
+      >
+        <view class="route-header">
+          <text class="route-name">{{item.name}}</text>
+          <text class="route-tag">{{item.tag}}</text>
+        </view>
+        <!-- 外部预览：简略景点和时间点，只显示前两个 -->
+        <view class="spot-preview">
+          <view class="spot-item" wx:for="{{item.spots.slice(0,2)}}" wx:key="index">
+            <text>{{item.name}}</text>
+            <text class="spot-time">{{item.duration}}</text>
+          </view>
+          <text wx:if="{{item.spots.length > 2}}" class="spot-more">+{{item.spots.length-2}}</text>
+        </view>
+        <!-- 微小箭头示意 -->
+        <view class="arrow">›</view>
+      </view>
+    </block>
+
+    <!-- 空状态 -->
+    <view wx:else class="empty-state">
+      <text>没有找到匹配的路线</text>
+      <text style="font-size: 28rpx; margin-top: 16rpx;">试试其他关键词或分类吧</text>
+    </view>
+  </view>
+
+  <!-- 路线详情弹窗 (默认隐藏) -->
+  <view class="modal-overlay" wx:if="{{showModal}}" bindtap="closeModal" data-target="mask">
+    <view class="modal-content" catchtap="stopPropagation">
+      <view class="modal-header">
+        <text class="modal-title">{{currentRoute.name}}</text>
+        <view class="close-btn" bindtap="closeModal">✕</view>
+      </view>
+      <!-- 时间线内容 -->
+      <view class="timeline">
+        <view class="timeline-item" wx:for="{{currentRoute.spots}}" wx:key="index">
+          <view class="timeline-dot"></view>
+          <view class="timeline-info">
+            <text class="spot-name">{{item.name}}</text>
+            <text class="spot-duration">建议游玩 {{item.duration}}</text>
+          </view>
+        </view>
+      </view>
+      <!-- 附加说明（占位） -->
+      <view class="modal-footer">
+        <text class="hint">* 具体时间根据现场调整</text>
+      </view>
+    </view>
+  </view>
+</view>

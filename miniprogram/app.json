@@ -2,8 +2,6 @@
     "pages": [
       "pages/index/index",
       "pages/my/my",
-      "pages/food/food",
-      "pages/entertainment/entertainment",
       "pages/route/route",
       "pages/shop/shop",
       "pages/order/order",

@@ -1,1 +1,283 @@
 /* pages/route/route.wxss */
+.container {
+  padding: 32rpx 24rpx 48rpx;
+  min-height: 100vh;
+  background-color: #f8fafc;
+  box-sizing: border-box;
+}
+
+.header {
+  margin-bottom: 32rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.title {
+  font-size: 48rpx;
+  font-weight: 700;
+  color: #1e293b;
+  letter-spacing: 1rpx;
+}
+.sub {
+  font-size: 28rpx;
+  color: #64748b;
+  background: #eef2f6;
+  padding: 8rpx 24rpx;
+  border-radius: 60rpx;
+}
+
+/* 搜索框 */
+.search-box {
+  background-color: #ffffff;
+  border-radius: 70rpx;
+  padding: 20rpx 100rpx;
+  margin-bottom: 40rpx;
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0,0,0,0.02);
+  border: 2rpx solid #e9edf2;
+}
+.search-box .icon {
+  font-size: 36rpx;
+  color: #94a3b8;
+}
+.search-box input {
+  flex: 1;
+  font-size: 30rpx;
+  height: 48rpx;
+  color: #0f172a;
+}
+.placeholder {
+  color: #b9c7da;
+  font-size: 30rpx;
+}
+
+/* 分类区域 */
+.filter-section {
+  margin-bottom: 40rpx;
+}
+.section-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 20rpx;
+}
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20rpx;
+}
+.tag-item {
+  background-color: #f1f4f9;
+  padding: 16rpx 42rpx;
+  border-radius: 60rpx;
+  font-size: 30rpx;
+  color: #2c3e50;
+  border: 2rpx solid #dee5ed;
+  transition: all 0.1s;
+  font-weight: 500;
+}
+.tag-item.active {
+  background-color: #1e293b;
+  color: white;
+  border-color: #1e293b;
+  box-shadow: 0 6rpx 16rpx rgba(0,0,0,0.1);
+}
+
+/* 路线卡片 */
+.route-list {
+  display: flex;
+  flex-direction: column;
+  gap: 28rpx;
+}
+.route-card {
+  background: white;
+  border-radius: 40rpx;
+  padding: 32rpx 180rpx;
+  box-shadow: 0 8rpx 24rpx rgba(0,0,0,0.02);
+  border: 2rpx solid #ecf1f6;
+  position: relative;
+  transition: 0.1s;
+  padding-left: 45rpx;
+}
+.route-card:active {
+  background-color: #fafdff;
+  transform: scale(0.99);
+}
+.route-header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 24rpx;
+  gap: 30rpx;
+}
+.route-name {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #0b2b40;
+  line-height: 1.3;
+  vertical-align: middle;
+}
+.route-tag {
+  background-color: #e1ecfe;
+  color: #2266cc;
+  font-size: 24rpx;
+  padding: 8rpx 22rpx;
+  border-radius: 50rpx;
+  font-weight: 600;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+.spot-preview {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16rpx;
+  padding-left: 8rpx;
+}
+.spot-item {
+  background-color: #f2f6fc;
+  padding: 12rpx 26rpx;
+  border-radius: 50rpx;
+  font-size: 28rpx;
+  color: #2c3e50;
+  display: inline-flex;
+  align-items: center;
+  gap: 16rpx;
+  border: 2rpx solid #dde5f0;
+}
+.spot-time {
+  background-color: white;
+  padding: 4rpx 16rpx;
+  border-radius: 60rpx;
+  color: #2c6bff;
+  font-size: 24rpx;
+  font-weight: 500;
+}
+.spot-more {
+  color: #6c7a91;
+  font-size: 28rpx;
+  background: #eef2f6;
+  padding: 8rpx 22rpx;
+  border-radius: 50rpx;
+}
+.arrow {
+  position: absolute;
+  right: 30rpx;
+  bottom: 38rpx;
+  font-size: 48rpx;
+  color: #bac8dc;
+  font-weight: 300;
+}
+
+/* 空状态 */
+.empty-state {
+  background: #ffffffd9;
+  border-radius: 40rpx;
+  padding: 80rpx 32rpx;
+  text-align: center;
+  color: #94a3b8;
+  font-size: 32rpx;
+  border: 2rpx dashed #ccdae9;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 弹窗 overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.4);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+.modal-content {
+  width: 600rpx;
+  max-width: 90%;
+  background: white;
+  border-radius: 60rpx;
+  padding: 40rpx 32rpx 32rpx;
+  box-shadow: 0 40rpx 80rpx rgba(0,0,0,0.3);
+  max-height: 80vh;
+  overflow-y: auto;
+}
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40rpx;
+}
+.modal-title {
+  font-size: 44rpx;
+  font-weight: 700;
+  color: #0f172a;
+  max-width: 70%;
+}
+.close-btn {
+  background: #f0f4fa;
+  width: 64rpx;
+  height: 64rpx;
+  line-height: 64rpx;
+  text-align: center;
+  border-radius: 50%;
+  font-size: 44rpx;
+  color: #475569;
+}
+.close-btn:active {
+  background: #dae2ec;
+}
+.timeline {
+  padding-left: 12rpx;
+}
+.timeline-item {
+  display: flex;
+  gap: 28rpx;
+  padding: 28rpx 0;
+  border-bottom: 2rpx dashed #e5eaef;
+}
+.timeline-item:last-child {
+  border-bottom: none;
+}
+.timeline-dot {
+  width: 20rpx;
+  height: 20rpx;
+  background: #2979ff;
+  border-radius: 50%;
+  margin-top: 14rpx;
+  box-shadow: 0 0 0 6rpx #e1ebff;
+}
+.timeline-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+}
+.spot-name {
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #1e293b;
+}
+.spot-duration {
+  font-size: 28rpx;
+  color: #6f7d98;
+  background: #edf2f9;
+  padding: 8rpx 22rpx;
+  border-radius: 50rpx;
+  align-self: flex-start;
+}
+.modal-footer {
+  margin-top: 36rpx;
+  border-top: 2rpx solid #eef2f6;
+  padding-top: 24rpx;
+}
+.hint {
+  font-size: 24rpx;
+  color: #99a9bf;
+}

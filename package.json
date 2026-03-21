@@ -1,0 +1,24 @@
+{
+  "name": "feiyi",
+  "version": "1.0.0",
+  "description": "<<<<<<< HEAD\r # 云开发 quickstart",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/3knife3/FeiYi.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/3knife3/FeiYi/issues"
+  },
+  "homepage": "https://github.com/3knife3/FeiYi#readme",
+  "dependencies": {
+    "@vant/weapp": "^1.11.7"
+  }
+}

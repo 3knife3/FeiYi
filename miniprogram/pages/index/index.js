@@ -6,6 +6,8 @@ Page({
     {id: '2', imgUrl: '/images/banner/banner2.png'},
     {id: '3', imgUrl: '/images/banner/banner3.png'}
     ],
+    importantNotice: '今日打卡规则调整：需完成定位打卡才有效',
+    latestNotice: '逢简水乡非遗小程序正在部署中...',
     functionList: 
     [
       {name: '科普', icon: '/images/function/science.png'},
@@ -19,13 +21,13 @@ Page({
     const name = e.currentTarget.dataset.name;
     switch(name) {
       case '科普':
-        wx.navigateTo({url: '/pages/science/science'});
+        wx.switchTab({url: '/pages/science/science'});
         break;
       case '美食':
-        wx.navigateTo({url: '/pages/food/food'});
+        wx.switchTab({url: '/pages/science/science'});
         break;  
       case '娱乐':
-        wx.navigateTo({url: '/pages/entertainment/entertainment'});
+        wx.switchTab({url: '/pages/science/science'});
         break;
       case '路线推荐':
         wx.navigateTo({url: '/pages/route/route'});
@@ -44,7 +46,7 @@ Page({
     // 1. 获取文件管理器
     const fs = wx.getFileSystemManager();
     // 2. 你的图片本地路径（注意：去掉开头的 /，改为相对路径）
-    const localPath = 'images/map/map.jpg';
+    const localPath = 'images/map/new_map.png';
 
     try {
       // 3. 读取本地文件转成临时路径 (这是关键！)

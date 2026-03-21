@@ -1,4 +1,4 @@
-<!-- 轮播图 -->
+<!-- 1. 轮播图 -->
 <view class="banner">
   <swiper class="banner-swiper" autoplay indicator-dots circular indicator-color='#FFFFF' interval='3000' duration="1000">
       <swiper-item wx:for="{{swiperList}}" wx:key="index" class="banner-swiper-item">
@@ -7,6 +7,28 @@
   </swiper>
 </view>
 
+<!-- 2. 重要通知！  -->
+<van-notice-bar
+  text="{{ importantNotice }}"
+  scrollable
+  speed="80"
+  background="#f5f5f5"
+  class="notice-bar"
+>
+  <view slot="left-icon" class="notice-title">重要通知：</view>
+</van-notice-bar>
+
+
+<!-- 3. 最新公告  -->
+<view class="latest-announcement-box">
+  <view class="announce-tag">
+    <text>最新</text>
+    <text>公告</text>
+  </view>
+  <view class="announce-content">{{latestNotice}}</view>
+</view>
+
+<!-- 4. 功能部分  -->
 <view class="function-grid">
   <view class="grid-item" wx:for="{{functionList}}" wx:key="name" bindtap="navigateToPage" data-name="{{item.name}}">
     <image class="item-icon" src="{{item.icon}}" mode="aspectFill"></image>
@@ -14,13 +36,11 @@
   </view>
 </view>
 
-<!-- 3. 首页地图显示区域（路径：images/map/map.jpg） -->
-<!-- 首页地图区域 -->
-<!-- 首页地图区域 -->
+<!-- 5. 首页地图显示区域（路径：images/map/map.jpg） -->
 <view class="map-box">
   <text class="map-title">地图区域</text>
   <view class="map-preview" bindtap="previewMap">
-    <image class="map-img" src="/images/map/map.jpg"></image>
+    <image class="map-img" src="/images/map/new_map.png"></image>
     <text class="map-tip">点击放大</text>
   </view>
 </view>
