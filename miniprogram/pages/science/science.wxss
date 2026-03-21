@@ -1,56 +1,99 @@
+/* 页面容器 */
 .container {
     padding: 20rpx;
     background: #f5f5f5;
     min-height: 100vh;
+    box-sizing: border-box;
   }
   
+  /* 栏目 */
   .tabs {
     display: flex;
     justify-content: space-around;
     margin-bottom: 30rpx;
+    width: 100%;
   }
-  
+  /* 标签 */
   .tab {
     font-size: 32rpx;
     color: #666;
-    padding: 10rpx 20rpx;
-    border-radius: 20rpx;
+    padding: 15rpx 30rpx;
+    cursor: pointer;
+    border-radius: 60rpx;
   }
-  
+  /* 栏目标签点击后高亮显示 */
   .tab.active {
     background: #00c1de;
     color: #fff;
+    border-radius: 60rpx;
   }
   
-  .swiper {
-    height: 400rpx;
-    border-radius: 20rpx;
+  /* 卡片列表 */
+  .card-list {
+    display: flex;
+    flex-direction: column;
+    gap: 50rpx; /* 卡片之间间隔 */
+    width: 100%;
+  }
+  /* 卡片 */
+  .card-item {
+    position: relative;
+    width: 100%;
+    height: 350rpx; 
+    border-radius: 60rpx; 
     overflow: hidden;
+    box-sizing: border-box;
   }
-  
-  .swiper-image {
+/* 卡片背景图 */
+  .card-bg {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    display: block;
   }
-  
-  .content-box {
-    margin-top: 30rpx;
-    padding: 20rpx;
-    background: #fff;
-    border-radius: 12rpx;
+  /* 卡片文本 */
+  .card-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 40rpx 30rpx;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.6));
+    color: #fff;
+    box-sizing: border-box;
   }
-  
-  .title {
+  .card-title {
     font-size: 36rpx;
     font-weight: bold;
-    color: #333;
     display: block;
     margin-bottom: 10rpx;
   }
-  
-  .desc {
+  .card-desc {
     font-size: 28rpx;
-    color: #666;
     line-height: 1.6;
+    opacity: 0.95;
+  }
+
+  /* 长图弹窗 */
+.long-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.2);
+    z-index: 99999;
+  }
+  .long-scroll {
+    width: 100%;
+    height: 100%;
+    padding: 40rpx;
+    box-sizing: border-box;
+  }
+  /* 长图 */
+  .long-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 70rpx;
   }

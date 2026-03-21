@@ -3,8 +3,8 @@ Page({
     data: {
       userInfo:{
           avatar:'/images/banner/banner1.png',
-          name:'Yeonjun',
-          score:'913'
+          name:'DaChuang',
+          score:'10000'
       },
       showContact:false
     },

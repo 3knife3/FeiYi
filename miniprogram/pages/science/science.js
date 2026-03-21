@@ -1,40 +1,56 @@
 Page({
     data: {
-      currentTab: "scenery", // 当前栏目：scenery/food/entertainment
-      bannerList: [], // 当前轮播数据
-      currentBanner: {}, // 当前显示的大图标题/文字
-  
-      // 三套轮播图数据（可以替换成你的图片）
-      bannerData: {
-        scenery: [
-          { id: 1, image: "/images/science/sci1.png", title: "绿藻景区", desc: "绿藻景区位于XX位置，是著名的自然景观。" },
-          { id: 2, image: "/images/science/sci2.png", title: "森林公园", desc: "森林公园拥有大片植被与湖泊，适合郊游。" }
-        ],
-        food: [
-          { id: 1, image: "/images/science/sci3.png", title: "特色美食", desc: "本地特色美食包括烤鱼、面食、小吃。" },
-          { id: 2, image: "/images/science/sci1.png", title: "美味佳肴", desc: "本地美味佳肴非常受欢迎，口感独特。" }
-        ],
-        entertainment: [
-          { id: 1, image: "/images/science/sci2.png", title: "娱乐项目", desc: "娱乐项目包括游船、攀岩、骑行等。" },
-          { id: 2, image: "/images/science/sci3.png", title: "休闲体验", desc: "休闲体验适合全家游玩，轻松愉快。" }
-        ]
-      }
+      currentTab: "scenery",
+      bannerList: [],
+      currentBanner: {},
+      showModal: false,
+      longImageUrl: ""
     },
   
-    onLoad() {
-      this.initBannerList();
-    },
+    loadDataFromDB() {
+        const db = wx.cloud.database();
+    
+        db.collection("science") // 你的数据库集合名
+          .where({ isShow: true })
+          .get()
+          .then(res => {
+            let list = res.data;
+    
+            // 自动按 type 分类
+            let bannerData = {
+              scenery: list.filter(i => i.type === "scenery"),
+              food: list.filter(i => i.type === "food"),
+              entertainment: list.filter(i => i.type === "entertainment")
+            };
+    
+            this.setData({
+              bannerData: bannerData
+            }, () => {
+              this.initBannerList();
+            });
+          });
+      },
+
+    // 首页快捷键跳转栏目函数
+    onShow() {
+        const targetTab = getApp().globalData.scienceTab || "scenery";
+        this.setData({
+          currentTab: targetTab
+        }, () => {
+          this.loadDataFromDB();
+        });
+      },
   
-    // 初始化轮播图
+    // 标签跳转函数
     initBannerList() {
       const { currentTab, bannerData } = this.data;
+      const currentData = bannerData[currentTab] || [];
       this.setData({
-        bannerList: bannerData[currentTab],
-        currentBanner: bannerData[currentTab][0]
+        bannerList: currentData,
+        currentBanner: currentData[0] || {}
       });
     },
-  
-    // 切换栏目
+//   点击栏目标签之后跳转
     switchTab(e) {
       const tab = e.currentTarget.dataset.tab;
       this.setData({
@@ -44,20 +60,42 @@ Page({
       });
     },
   
-    // 轮播滑动切换
+    // 滑动轮播图片跳转（保留，不影响）
     onSwiperChange(e) {
       const index = e.detail.current;
       const { bannerList } = this.data;
-      this.setData({
-        currentBanner: bannerList[index]
-      });
+      if (bannerList[index]) {
+        this.setData({
+          currentBanner: bannerList[index]
+        });
+      }
     },
+
+    //弹窗打开
+    openLongImage(e) {
+        const id = e.currentTarget.dataset.id;
+        const { bannerList } = this.data;
+        const item = bannerList.find(i => i.id === id);
+
+        console.log("长图地址 =", item?.longImage); // 👈 大写 L
+      
+        if (!item || !item.longImage) {
+            wx.showToast({ title: '暂无长图介绍', icon: 'none' });
+            return;
+          }
+        
+          // 直接赋值本地路径，去掉所有云调用代码
+          this.setData({
+            showModal: true,
+            longImageUrl: item.longImage
+          });
+        },
   
-    // 点击进入详情页
-    goToDetail(e) {
-      const id = e.currentTarget.dataset.id;
-      wx.navigateTo({
-        url: `/pages/detail/detail?id=${id}`
-      });
-    }
-  })
+    // 弹窗关闭
+  closeLongImage() {
+    this.setData({
+      showModal: false,
+      longImageUrl: ""
+    });
+  }
+})

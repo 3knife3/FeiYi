@@ -2,7 +2,5 @@
     "navigationBarTitleText": "科普",
     
     "usingComponents": {
-        "van-cell": "@vant/weapp/cell/index",
-        "van-dialog": "@vant/weapp/dialog/index"
     }
   }

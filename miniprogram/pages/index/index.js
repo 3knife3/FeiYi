@@ -19,6 +19,7 @@ Page({
   },
   navigateToPage(e) {
     const name = e.currentTarget.dataset.name;
+    const app = getApp();
     switch(name) {
       case '科普':
         wx.switchTab({url: '/pages/science/science'});
@@ -28,6 +29,23 @@ Page({
         break;  
       case '娱乐':
         wx.switchTab({url: '/pages/science/science'});
+        app.globalData.scienceTab = 'scenery'; 
+        wx.switchTab({
+          url: '/pages/science/science',
+        })
+        break;
+      case '美食':
+        app.globalData.scienceTab = 'food'; 
+        wx.switchTab({
+          url: '/pages/science/science',
+        })
+        break;  
+      case '娱乐':
+        app.globalData.scienceTab = 'entertainment'; 
+        wx.switchTab({
+          url: '/pages/science/science',
+        })
+
         break;
       case '路线推荐':
         wx.navigateTo({url: '/pages/route/route'});
