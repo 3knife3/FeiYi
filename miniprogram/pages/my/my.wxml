@@ -1,12 +1,20 @@
 <!--pages/my/my.wxml-->
+
+<!-- 登陆前 -->
 <block wx:if="{{userInfo==null}}">
-    <view class="login-area">
-        <button class="btn" bind:tap="goLogin">点击登录</button>
-    </view>
+    <button class="avatar-wrapper" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
+        <image class="avatar" src="{{avatarUrl}}"></image>
+    </button> 
+    <input type="nickname" class="weui-input" placeholder="请输入昵称"/>
 </block>
+
+<!-- 登录后 -->
 <block wx:else>
     <view class="container">
+        <!-- 用户信息栏 -->
         <view class="top-view">
+
+            <!-- 用户 -->
             <view class="user">
                 <view class="row">
                     <image class="avatar" src="{{userInfo.avatar}}"></image>
@@ -15,18 +23,30 @@
                     </view>
                 </view>
             </view>
+
+            <!-- 信息 -->
             <view class="numbers">
+
+                <!-- 积分 -->
                 <view class="row">
                     <text>{{userInfo.score}}</text>
                     <text>积分</text>
                 </view>
+
+                <!-- 碎片 -->
+                <view class="row">
+                    <text>碎片</text>
+                </view>
             </view>
         </view>
+
+        <!-- 选项 -->
         <view class="choice">
          <van-cell class="choice-item" title="积分兑换记录" is-link bind:tap="goToOrder" />
          <van-cell title="关于我们" is-link bind:tap="showContact" />
          <van-dialog title="关于我们" message="本小程序由学生团队开发。" show="{{showContact}}" bind:confirm="onConfirm">
          </van-dialog>
         </view>
+
     </view>
 </block>

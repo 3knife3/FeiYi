@@ -1,20 +1,117 @@
-// pages/my/my.js
+const defaultAvatarUrl = '/images/login/DefaultAvatar.png'
+
 Page({
     data: {
-      userInfo:{
-          avatar:'/images/banner/banner1.png',
-          name:'DaChuang',
-          score:'10000'
-      },
-      showContact:false
+      userInfo: null,
+      showContact: false,
+      showLoginPopup: false,
+      avatarUrl: defaultAvatarUrl, // 保留你原来的
+      tempName: "" // 只补一个缺失的变量
     },
 
+    // 选择头像（修复冲突）
+    onChooseAvatar(e) {
+      const { avatarUrl } = e.detail 
+      this.setData({
+        avatarUrl: avatarUrl, // 显示默认图更新
+        tempAvatar: avatarUrl  // 登录提交用
+      })
+    },
+
+    // 输入昵称（保留原样）
+    onInputName(e) {
+      this.setData({
+        tempName: e.detail.value
+      })
+    },
+
+    onLoad() {
+      this.checkLogin()
+    },
+
+    onShow() {
+      this.checkLogin()
+    },
+
+    // 检查登录
+    checkLogin() {
+      const userInfo = wx.getStorageSync('userInfo')
+      if (userInfo) {
+        this.setData({ userInfo })
+      }
+    },
+
+    // 打开登录弹窗
+    goLogin() {
+      this.setData({ showLoginPopup: true })
+    },
+
+    // 关闭登录弹窗
+    closeLoginPopup() {
+      this.setData({ showLoginPopup: false })
+    },
+
+    // 提交登录（完全保留你的逻辑，只修复变量）
+    submitLogin() {
+      const { avatarUrl, tempName } = this.data
+
+      // 修复：用 avatarUrl 判断，不是 tempAvatar
+      if (!avatarUrl || !tempName) {
+        wx.showToast({ title: '请完善信息', icon: 'none' })
+        return
+      }
+
+      wx.showLoading({ title: '登录中...' })
+
+      wx.cloud.callFunction({
+        name: "wechatLogin",
+        data: {
+          avatar: avatarUrl, // 用 avatarUrl 提交
+          name: tempName
+        }
+      }).then(res => {
+        wx.hideLoading()
+        const result = res.result
+
+        if (result.code === 0) {
+          wx.setStorageSync('userInfo', result.userInfo)
+          this.setData({
+            userInfo: result.userInfo,
+            showLoginPopup: false
+          })
+          wx.showToast({ title: '登录成功' })
+        } else {
+          wx.showToast({ title: '登录失败', icon: 'none' })
+        }
+      }).catch(err => {
+        wx.hideLoading()
+        wx.showToast({ title: '网络异常', icon: 'none' })
+      })
+    },
+
+    // 退出登录
+    logout() {
+      wx.showModal({
+        title: '提示',
+        content: '确定要退出登录吗？',
+        success: (res) => {
+          if (res.confirm) {
+            wx.removeStorageSync('userInfo');
+            this.setData({ userInfo: null });
+            wx.showToast({ title: '已退出登录' })
+          }
+        }
+      });
+    },
+
+    // 订单记录
     goToOrder(){
         wx.navigateTo({
           url: '/pages/order/order',
         })
     },
 
+    // 关于我们
     showContact(){
         this.setData({
             showContact:true
@@ -25,4 +122,4 @@ Page({
             showContact:false
         })
     }
-  })
+})
