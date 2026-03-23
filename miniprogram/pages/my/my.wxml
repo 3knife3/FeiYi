@@ -1,44 +1,54 @@
-<!--pages/my/my.wxml-->
+<!--pages/login/login.wxml-->
+<view class="container">
 
+        
 <!-- 登陆前 -->
 <block wx:if="{{userInfo==null}}">
-    <button class="avatar-wrapper" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
+    <!-- <button class="avatar-wrapper" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
         <image class="avatar" src="{{avatarUrl}}"></image>
     </button> 
-    <input type="nickname" class="weui-input" placeholder="请输入昵称"/>
+    <input type="nickname" class="weui-input" placeholder="请输入昵称"/> -->
+    
+    <image class="avatar" src="/images/login/DefaultAvatar.png"></image>
+    <button>你好，请登录！</button>
+
 </block>
+
 
 <!-- 登录后 -->
 <block wx:else>
-    <view class="container">
+
         <!-- 用户信息栏 -->
         <view class="top-view">
 
-            <!-- 用户 -->
-            <view class="user">
-                <view class="row">
-                    <image class="avatar" src="{{userInfo.avatar}}"></image>
-                    <view class="name">
-                        <view bind:tap="logout">{{userInfo.name}}</view>
-                    </view>
-                </view>
-            </view>
-
-            <!-- 信息 -->
-            <view class="numbers">
-
-                <!-- 积分 -->
-                <view class="row">
-                    <text>{{userInfo.score}}</text>
-                    <text>积分</text>
-                </view>
-
-                <!-- 碎片 -->
-                <view class="row">
-                    <text>碎片</text>
-                </view>
-            </view>
+<!-- 用户 -->
+<view class="user">
+    <view class="row">
+        <image class="avatar" src="{{userInfo.avatar}}"></image>
+        <view class="name">
+            <view bind:tap="logout">{{userInfo.name}}</view>
         </view>
+    </view>
+</view>
+
+<!-- 信息 -->
+<view class="numbers">
+
+    <!-- 积分 -->
+    <view class="row">
+        <text>{{userInfo.score}}</text>
+        <text>积分</text>
+    </view>
+
+    <!-- 碎片 -->
+    <view class="row">
+        <text>碎片</text>
+    </view>
+</view>
+</view>
+    
+</block>
+
 
         <!-- 选项 -->
         <view class="choice">
@@ -49,4 +59,3 @@
         </view>
 
     </view>
-</block>

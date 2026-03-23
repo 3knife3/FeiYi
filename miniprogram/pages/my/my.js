@@ -2,22 +2,29 @@ const defaultAvatarUrl = '/images/login/DefaultAvatar.png'
 
 Page({
     data: {
-      userInfo: null,
+      userInfo:null,
+    //    {
+    //       avatar:"/images/banner/banner1.png",
+    //       name:"knife"
+    //   },
       showContact: false,
       showLoginPopup: false,
       avatarUrl: defaultAvatarUrl, // 保留你原来的
       tempName: "" // 只补一个缺失的变量
     },
-
-    // 选择头像（修复冲突）
     onChooseAvatar(e) {
-      const { avatarUrl } = e.detail 
-      this.setData({
-        avatarUrl: avatarUrl, // 显示默认图更新
-        tempAvatar: avatarUrl  // 登录提交用
-      })
-    },
-
+        // 关键：用户取消选择时，不执行逻辑
+        if (e.detail.avatarUrl) {
+          // 正常选择头像才走这里
+          console.log("选择头像成功", e.detail.avatarUrl)
+          this.setData({
+            avatarUrl: e.detail.avatarUrl
+          })
+        } else {
+          // 用户取消选择，什么都不做，就不会报错
+          console.log("用户取消选择头像")
+        }
+      },
     // 输入昵称（保留原样）
     onInputName(e) {
       this.setData({

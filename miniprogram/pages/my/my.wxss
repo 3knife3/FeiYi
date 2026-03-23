@@ -1,27 +1,17 @@
-/* 登录按钮 */
 .login-btn-area {
     height: 100vh;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
   }
-  .login-btn {
-    width: 200rpx;
-    height: 80rpx;
-    background: #01ccb6;
-    color: #fff;
-    border-radius: 10rpx;
+  .login-tip {
+    margin-top: 20rpx;
+    font-size: 30rpx;
+    color: #666;
   }
   
-  /* 弹窗内部 */
-  .login-dialog {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20rpx 0;
-  }
-  
-  /* 你的原有样式：avatar-wrapper */
+  /* 你的原有样式完全保留 */
   .avatar-wrapper {
     width: 120rpx !important;
     height: 120rpx !important;
@@ -34,8 +24,6 @@
     height: 120rpx;
     border-radius: 50%;
   }
-  
-  /* 你的原有样式：weui-input */
   .weui-input {
     width: 80%;
     height: 70rpx;
@@ -44,8 +32,6 @@
     margin: 20rpx 0;
     text-align: center;
   }
-  
-  /* 提交按钮 */
   .submit-btn {
     width: 80%;
     height: 80rpx;
