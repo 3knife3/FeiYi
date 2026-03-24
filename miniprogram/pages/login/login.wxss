@@ -1,1 +1,81 @@
-/* pages/login/login.wxss */
+/* 基础容器 */
+.container {
+    padding: 60rpx 40rpx;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    background: #f7f8fa;
+  }
+  
+  /* 标题 */
+  .login-title {
+    font-size: 48rpx;
+    font-weight: bold;
+    margin-bottom: 60rpx;
+    color: #333;
+  }
+  
+  /* 头像区域 */
+  .avatar-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 50rpx;
+  }
+  .avatar-wrapper {
+    padding: 0;
+    background: transparent;
+    border: none;
+    margin: 0;
+  }
+  .avatar {
+    width: 160rpx;
+    height: 160rpx;
+    border-radius: 50%;
+    border: 4rpx solid #eee;
+  }
+  .avatar-tip {
+    margin-top: 16rpx;
+    font-size: 24rpx;
+    color: #999;
+  }
+  
+  /* 输入框 */
+  .input-box {
+    width: 100%;
+    margin-bottom: 60rpx;
+    position: relative;
+  }
+  .weui-input {
+    height: 88rpx;
+    padding: 0 20rpx;
+    border: 2rpx solid #eee;
+    border-radius: 12rpx;
+    font-size: 30rpx;
+    background: #fff;
+  }
+  
+  /* 新增：获取微信昵称按钮 */
+  .get-wx-name {
+    position: absolute;
+    right: 20rpx;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 26rpx;
+    color: #07c160;
+    padding: 8rpx 16rpx;
+    border-radius: 6rpx;
+    background: #f0f9f4;
+  }
+  
+  /* 提交按钮 */
+  .submit-btn {
+    width: 100%;
+    height: 88rpx;
+    background: #07c160;
+    color: #fff;
+    border-radius: 12rpx;
+    font-size: 32rpx;
+    border: none;
+  }

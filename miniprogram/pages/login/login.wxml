@@ -1,40 +1,27 @@
 <!--pages/login/login.wxml-->
 <view class="container">
-        <!-- 用户信息栏 -->
-        <view class="top-view">
+  <!-- 登录标题 -->
+  <view class="login-title">完成登录</view>
 
-            <!-- 用户 -->
-            <view class="user">
-                <view class="row">
-                    <image class="avatar" src="{{userInfo.avatar}}"></image>
-                    <view class="name">
-                        <view bind:tap="logout">{{userInfo.name}}</view>
-                    </view>
-                </view>
-            </view>
+  <!-- 头像选择区域 -->
+  <view class="avatar-box">
+    <button class="avatar-wrapper" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
+      <image class="avatar" src="{{avatarUrl}}"></image>
+    </button>
+    <view class="avatar-tip">点击设置头像</view>
+  </view>
 
-            <!-- 信息 -->
-            <view class="numbers">
+  <!-- 昵称输入区域 + 一键获取微信昵称 -->
+  <view class="input-box">
+    <input 
+      type="nickname" 
+      class="weui-input" 
+      placeholder="请输入昵称" 
+      value="{{tempName}}"
+      bindinput="onInputName"
+    />
+  </view>
 
-                <!-- 积分 -->
-                <view class="row">
-                    <text>{{userInfo.score}}</text>
-                    <text>积分</text>
-                </view>
-
-                <!-- 碎片 -->
-                <view class="row">
-                    <text>碎片</text>
-                </view>
-            </view>
-        </view>
-
-        <!-- 选项 -->
-        <view class="choice">
-         <van-cell class="choice-item" title="积分兑换记录" is-link bind:tap="goToOrder" />
-         <van-cell title="关于我们" is-link bind:tap="showContact" />
-         <van-dialog title="关于我们" message="本小程序由学生团队开发。" show="{{showContact}}" bind:confirm="onConfirm">
-         </van-dialog>
-        </view>
-
-    </view>
+  <!-- 登录提交按钮 -->
+  <button class="submit-btn" bind:tap="submitLogin">确认登录</button>
+</view>

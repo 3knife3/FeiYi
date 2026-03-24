@@ -2,7 +2,8 @@ const defaultAvatarUrl = '/images/login/DefaultAvatar.png'
 
 Page({
     data: {
-      userInfo:null,
+      userInfo:
+      null,
     //    {
     //       avatar:"/images/banner/banner1.png",
     //       name:"knife"
@@ -48,9 +49,11 @@ Page({
       }
     },
 
-    // 打开登录弹窗
+    // 跳转登录页面
     goLogin() {
-      this.setData({ showLoginPopup: true })
+      wx.navigateTo({
+        url: '/pages/login/login',
+      })
     },
 
     // 关闭登录弹窗

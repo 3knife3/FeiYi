@@ -1,66 +1,150 @@
-// pages/login/login.js
+const defaultAvatarUrl = '/images/login/DefaultAvatar.png'
+
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-
+    userInfo: null,
+    showContact: false,
+    showLoginPopup: false,
+    avatarUrl: defaultAvatarUrl,
+    tempName: ""
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad(options) {
-
+  // 选择头像
+  onChooseAvatar(e) {
+    if (e.detail.avatarUrl) {
+      console.log("选择头像成功", e.detail.avatarUrl)
+      this.setData({
+        avatarUrl: e.detail.avatarUrl
+      })
+    } else {
+      console.log("用户取消选择头像")
+    }
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady() {
-
+  // 输入昵称
+  onInputName(e) {
+    this.setData({
+      tempName: e.detail.value
+    })
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
+  // ======================
+  // 新增：一键获取微信昵称
+  // ======================
+  getWxNickName() {
+    wx.getUserProfile({
+      desc: '用于完善会员资料',
+      success: (res) => {
+        console.log("获取微信昵称成功", res.userInfo.nickName)
+        this.setData({
+          tempName: res.userInfo.nickName
+        })
+      },
+      fail: () => {
+        wx.showToast({ title: '已取消', icon: 'none' })
+      }
+    })
+  },
+
+  onLoad() {
+    this.checkLogin()
+  },
+
   onShow() {
-
+    this.checkLogin()
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide() {
-
+  checkLogin() {
+    const userInfo = wx.getStorageSync('userInfo')
+    if (userInfo) {
+      this.setData({ userInfo })
+    }
   },
 
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload() {
-
+  goLogin() {
+    wx.navigateTo({
+      url: '/pages/login/login',
+    })
   },
 
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh() {
-
+  closeLoginPopup() {
+    this.setData({ showLoginPopup: false })
   },
 
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom() {
+  // 提交登录
+  submitLogin() {
+    const { avatarUrl, tempName } = this.data
 
+    if (!avatarUrl || !tempName) {
+      wx.showToast({ title: '请完善信息', icon: 'none' })
+      return
+    }
+
+    wx.showLoading({ title: '登录中...' })
+
+    wx.cloud.callFunction({
+      name: "wechatLogin",
+      data: {
+        avatar: avatarUrl,
+        name: tempName
+      }
+    }).then(res => {
+      wx.hideLoading()
+      const result = res.result
+
+      if (result.code === 0) {
+        wx.setStorageSync('userInfo', result.userInfo)
+        this.setData({
+          userInfo: result.userInfo,
+          showLoginPopup: false
+        })
+        wx.showToast({ title: '登录成功' })
+        
+        // ======================
+        // 新增：登录成功 返回 my 页面
+        // ======================
+        setTimeout(() => {
+          wx.navigateBack()
+        }, 1500)
+
+      } else {
+        wx.showToast({ title: '登录失败', icon: 'none' })
+      }
+    }).catch(err => {
+      wx.hideLoading()
+      wx.showToast({ title: '网络异常', icon: 'none' })
+    })
   },
 
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage() {
+  logout() {
+    wx.showModal({
+      title: '提示',
+      content: '确定要退出登录吗？',
+      success: (res) => {
+        if (res.confirm) {
+          wx.removeStorageSync('userInfo');
+          this.setData({ userInfo: null });
+          wx.showToast({ title: '已退出登录' })
+        }
+      }
+    });
+  },
 
+  goToOrder() {
+    wx.navigateTo({
+      url: '/pages/order/order',
+    })
+  },
+
+  showContact() {
+    this.setData({
+      showContact: true
+    })
+  },
+
+  onConfirm() {
+    this.setData({
+      showContact: false
+    })
   }
 })
