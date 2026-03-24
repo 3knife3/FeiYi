@@ -1,7 +1,5 @@
 <!--pages/login/login.wxml-->
 <view class="container">
-  <!-- 登录标题 -->
-  <view class="login-title">完成登录</view>
 
   <!-- 头像选择区域 -->
   <view class="avatar-box">

@@ -4,10 +4,6 @@ Page({
     data: {
       userInfo:
       null,
-    //    {
-    //       avatar:"/images/banner/banner1.png",
-    //       name:"knife"
-    //   },
       showContact: false,
       showLoginPopup: false,
       avatarUrl: defaultAvatarUrl, // 保留你原来的
@@ -36,10 +32,13 @@ Page({
     onLoad() {
       this.checkLogin()
     },
-
     onShow() {
-      this.checkLogin()
-    },
+        this.checkLogin()
+        // +++++++++++++ 【新增】积分实时刷新 +++++++++++++
+        this.setData({
+          userInfo: wx.getStorageSync('userInfo')
+        })
+      },
 
     // 检查登录
     checkLogin() {

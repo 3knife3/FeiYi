@@ -2,10 +2,11 @@
 <view class="container">
 
 <!-- 登陆前：横向布局 + 整体可点击 -->
-<block wx:if="{{userInfo==null}}">
+<block wx:if="{{!userInfo}}">
   <view class="login-before" bind:tap="goLogin">
     <image class="avatar-default" src="/images/login/DefaultAvatar.png"></image>
     <text class="login-text">你好，请登录！</text>
+    <van-icon name="arrow" size="50rpx"/>
   </view>
 </block>
 

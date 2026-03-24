@@ -1,2 +1,12 @@
 <!--pages/order/order.wxml-->
-<text>pages/order/order.wxml</text>
+<view class="container">
+  <view class="score-info">当前积分：{{userInfo.score}}</view>
+
+  <view class="order-list">
+    <view wx:for="{{list}}" wx:key="_id" class="order-item">
+      <view>{{item.goodsName}}</view>
+      <view style="color:red">-{{item.costScore}} 分</view>
+    </view>
+    <view wx:if="{{list.length===0}}" class="empty">暂无兑换记录</view>
+  </view>
+</view>

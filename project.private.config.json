@@ -22,7 +22,7 @@
     "miniprogram": {
       "list": [
         {
-          "name": "my",
+          "name": "login",
           "pathName": "pages/my/my",
           "query": "",
           "scene": null,

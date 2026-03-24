@@ -29,7 +29,7 @@ Page({
   },
 
   // ======================
-  // 新增：一键获取微信昵称
+  // 一键获取微信昵称
   // ======================
   getWxNickName() {
     wx.getUserProfile({
@@ -71,7 +71,9 @@ Page({
     this.setData({ showLoginPopup: false })
   },
 
-  // 提交登录
+  // ======================================
+  // 提交登录（只加了 wx.login() 获取 code）
+  // ======================================
   submitLogin() {
     const { avatarUrl, tempName } = this.data
 
@@ -82,37 +84,41 @@ Page({
 
     wx.showLoading({ title: '登录中...' })
 
-    wx.cloud.callFunction({
-      name: "wechatLogin",
-      data: {
-        avatar: avatarUrl,
-        name: tempName
-      }
-    }).then(res => {
-      wx.hideLoading()
-      const result = res.result
+    // +++++++++++++ 新增：获取微信登录 code +++++++++++++
+    wx.login({
+      success: (res) => {
+        if (res.code) {
+          // 把 code 传给云函数
+          wx.cloud.callFunction({
+            name: "wechatLogin",
+            data: {
+              code: res.code,  // <-- 关键：openid 凭证
+              avatar: avatarUrl,
+              name: tempName
+            }
+          }).then(res => {
+            wx.hideLoading()
+            const result = res.result
 
-      if (result.code === 0) {
-        wx.setStorageSync('userInfo', result.userInfo)
-        this.setData({
-          userInfo: result.userInfo,
-          showLoginPopup: false
-        })
-        wx.showToast({ title: '登录成功' })
-        
-        // ======================
-        // 新增：登录成功 返回 my 页面
-        // ======================
-        setTimeout(() => {
-          wx.navigateBack()
-        }, 1500)
-
-      } else {
-        wx.showToast({ title: '登录失败', icon: 'none' })
+            if (result.code === 0) {
+              wx.setStorageSync('userInfo', result.userInfo)
+              this.setData({
+                userInfo: result.userInfo,
+                showLoginPopup: false
+              })
+              wx.showToast({ title: '登录成功' })
+              setTimeout(() => {
+                wx.navigateBack()
+              }, 1500)
+            } else {
+              wx.showToast({ title: '登录失败', icon: 'none' })
+            }
+          }).catch(err => {
+            wx.hideLoading()
+            wx.showToast({ title: '网络异常', icon: 'none' })
+          })
+        }
       }
-    }).catch(err => {
-      wx.hideLoading()
-      wx.showToast({ title: '网络异常', icon: 'none' })
     })
   },
 
