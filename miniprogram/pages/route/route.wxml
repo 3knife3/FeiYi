@@ -7,20 +7,29 @@
     <text class="sub">发现适合你的玩法</text>
   </view>
 
-  <!-- 搜索框 -->
-  <view class="search-box" bindtap="focusSearch">
-    <text class="icon">🔍</text>
-    <input 
-      type="text" 
-      placeholder="搜索景点或路线关键词" 
-      placeholder-class="placeholder"
-      value="{{searchKeyword}}"
-      bindinput="onSearchInput"
-      bindconfirm="handleSearch"
-    />
+  <!-- 搜索框 + 地图按钮 组合行 -->
+  <view class="search-map-wrap">
+    <!-- 搜索框 -->
+    <view class="search-box" bindtap="focusSearch">
+      <text class="icon">🔍</text>
+      <input 
+        type="text" 
+        placeholder="搜索景点或路线关键词" 
+        placeholder-class="placeholder"
+        value="{{searchKeyword}}"
+        bindinput="onSearchInput"
+        bindconfirm="handleSearch"
+      />
+    </view>
+
+    <!-- 右侧地图按钮（圆边方块） -->
+    <view class="map-btn" bindtap="showMapPopup">
+      <image src="/images/map/map_logo.png" mode="widthFix" class="map-icon"/>
+    </view>
+    
   </view>
 
-  <!-- 分类筛选标签 (亲子/朋友/情侣/家人) -->
+  <!-- 分类筛选标签 -->
   <view class="filter-section">
     <view class="section-title">👥 游玩类型</view>
     <view class="tag-list">
@@ -50,7 +59,6 @@
           <text class="route-name">{{item.name}}</text>
           <text class="route-tag">{{item.tag}}</text>
         </view>
-        <!-- 外部预览：简略景点和时间点，只显示前两个 -->
         <view class="spot-preview">
           <view class="spot-item" wx:for="{{item.spots.slice(0,2)}}" wx:key="index">
             <text>{{item.name}}</text>
@@ -58,7 +66,6 @@
           </view>
           <text wx:if="{{item.spots.length > 2}}" class="spot-more">+{{item.spots.length-2}}</text>
         </view>
-        <!-- 微小箭头示意 -->
         <view class="arrow">›</view>
       </view>
     </block>
@@ -77,7 +84,6 @@
         <text class="modal-title">{{currentRoute.name}}</text>
         <view class="close-btn" bindtap="closeModal">✕</view>
       </view>
-      <!-- 时间线内容 -->
       <view class="timeline">
         <view class="timeline-item" wx:for="{{currentRoute.spots}}" wx:key="index">
           <view class="timeline-dot"></view>
@@ -87,9 +93,28 @@
           </view>
         </view>
       </view>
-      <!-- 附加说明（占位） -->
       <view class="modal-footer">
         <text class="hint">* 具体时间根据现场调整</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 极简版地图弹窗 -->
+  <view class="modal-overlay" wx:if="{{showMap}}" bindtap="hideMapPopup">
+    <view class="map-modal-content" catchtap="stopPropagation">
+      <view class="map-modal-header">
+        <text class="map-modal-title">逢简水乡地图</text>
+        <view class="close-btn" bindtap="hideMapPopup">✕</view>
+      </view>
+      <view class="simple-map-container">
+        <image 
+          src="../../images/map/new_map.png"
+          class="simple-map-img"
+          mode="aspectFit"
+          bindtouchstart="touchStart"
+          bindtouchmove="touchMove"
+          style="transform: scale({{scale}});"
+        />
       </view>
     </view>
   </view>

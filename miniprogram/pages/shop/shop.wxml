@@ -102,3 +102,6 @@
     <view class="info">每日限1次|打卡后积分实时到账</view>
   </view>
 </van-popup>
+
+<button bindtap="handleUpload" type="primary">上传图片</button>
+<image wx:if="{{imageUrl}}" src="{{imageUrl}}" mode="widthFix" style="width: 100%; margin-top: 20rpx;" />

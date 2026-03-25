@@ -1,6 +1,7 @@
 // pages/shop/shop.js
-Page({
+const { uploadSingleImage } = require('../../utils/uploadImage.js');
 
+Page({
   /**
    * 页面的初始数据
    */
@@ -14,6 +15,7 @@ Page({
     selecetedName: '',
     selecetedId: 0,
     showModal: false,
+    imageUrl: '',
     list: [
       { id: 1, name: '保温杯', cost: 80, img: '/images/goods/thermal_mug.png' },
       { id: 2, name: '数据线', cost: 150, img: '/images/goods/usb_table.png' },
@@ -101,12 +103,22 @@ Page({
       // wx.navigateTo({url: ''}, 1000)
     }, 400)
   },
-
+  
   // 积分明细
   goDetail() {
     wx.navigateTo({ url: '../order/order'})
   },
-
+  
+  // 点击上传按钮调用
+  handleUpload() {
+    uploadSingleImage((fileID) => {
+      // 上传完成后的回调逻辑（每个页面可自定义）
+      if (fileID) {
+        this.setData({ imageUrl: fileID }); // index页面预览图片
+        console.log('index页面上传成功，fileID：', fileID);
+      }
+    });
+  },
   /**
    * 生命周期函数--监听页面加载
    */

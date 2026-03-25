@@ -40,7 +40,10 @@
 <view class="map-box">
   <text class="map-title">地图区域</text>
   <view class="map-preview" bindtap="previewMap">
-    <image class="map-img" src="/images/map/new_map.png"></image>
+    <image class="map-img" src="cloud://cloud1-2gp5ez590981c671.map/new_map.png"></image>
     <text class="map-tip">点击放大</text>
   </view>
 </view>
+
+<button bindtap="handleUpload" type="primary">上传图片</button>
+<image wx:if="{{imageUrl}}" src="{{imageUrl}}" mode="widthFix" style="width: 100%; margin-top: 20rpx;" />

@@ -6,6 +6,7 @@
   box-sizing: border-box;
 }
 
+/* 主题 */
 .header {
   margin-bottom: 32rpx;
   display: flex;
@@ -26,12 +27,20 @@
   border-radius: 60rpx;
 }
 
-/* 搜索框 */
+/* 搜索+地图按钮包裹层 */
+.search-map-wrap {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  margin-bottom: 40rpx;
+}
+
+/* 搜索框（调整宽度为flex:1，自动左移） */
 .search-box {
+  flex: 1;
   background-color: #ffffff;
   border-radius: 70rpx;
   padding: 20rpx 100rpx;
-  margin-bottom: 40rpx;
   display: flex;
   align-items: center;
   gap: 16rpx;
@@ -53,6 +62,25 @@
   font-size: 30rpx;
 }
 
+/* 地图按钮样式（圆边方块） */
+.map-btn {
+  width: 80rpx;
+  height: 80rpx;
+  background-color: #E1ECFE;
+  color: #fff;
+  border-radius: 20rpx; /* 圆边 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.08);
+}
+/* 地图图标样式 */
+.map-icon {
+  width: 50rpx;  /* 图标大小 */
+  height: 50rpx;
+}
+
 /* 分类区域 */
 .filter-section {
   margin-bottom: 40rpx;
@@ -70,13 +98,17 @@
 }
 .tag-item {
   background-color: #f1f4f9;
-  padding: 16rpx 42rpx;
+  padding: 16rpx 30rpx;
   border-radius: 60rpx;
   font-size: 30rpx;
   color: #2c3e50;
   border: 2rpx solid #dee5ed;
   transition: all 0.1s;
   font-weight: 500;
+  width: calc((100% - 20rpx) / 2);
+  text-align: center;
+  box-sizing: border-box;
+  line-height: 1.6;
 }
 .tag-item.active {
   background-color: #1e293b;
@@ -280,4 +312,44 @@
 .hint {
   font-size: 24rpx;
   color: #99a9bf;
+}
+
+/* 地图弹窗样式 */
+.map-modal-content {
+  width: 680rpx;
+  max-width: 95%;
+  background: white;
+  border-radius: 60rpx;
+  padding: 40rpx 32rpx;
+  box-shadow: 0 40rpx 80rpx rgba(0,0,0,0.3);
+  max-height: 85vh;
+}
+.map-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+.map-modal-title {
+  font-size: 40rpx;
+  font-weight: 700;
+  color: #0f172a;
+}
+/* 极简地图容器（固定高度，居中显示） */
+.simple-map-container {
+  width: 100%;
+  height: 500rpx;  /* 固定高度，保证能看到 */
+  background: #f5f5f5;
+  border-radius: 40rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+/* 极简地图图片（占满容器，自适应） */
+.simple-map-img {
+  width: 100%;
+  height: 100%;
+  transform-origin: center center; /* 缩放中心在中间 */
+  transition: transform 0.1s ease;
 }

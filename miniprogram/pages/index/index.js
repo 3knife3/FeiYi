@@ -1,4 +1,7 @@
 // index.js
+// 引入全局上传工具函数
+const { uploadSingleImage } = require('../../utils/uploadImage.js');
+
 Page({
   data: {
     swiperList: [
@@ -25,16 +28,6 @@ Page({
         wx.switchTab({url: '/pages/science/science'});
         break;
       case '美食':
-        wx.switchTab({url: '/pages/science/science'});
-        break;  
-      case '娱乐':
-        wx.switchTab({url: '/pages/science/science'});
-        app.globalData.scienceTab = 'scenery'; 
-        wx.switchTab({
-          url: '/pages/science/science',
-        })
-        break;
-      case '美食':
         app.globalData.scienceTab = 'food'; 
         wx.switchTab({
           url: '/pages/science/science',
@@ -45,7 +38,6 @@ Page({
         wx.switchTab({
           url: '/pages/science/science',
         })
-
         break;
       case '路线推荐':
         wx.navigateTo({url: '/pages/route/route'});
@@ -89,5 +81,15 @@ Page({
       });
       console.error('文件读取失败，请检查路径：', e);
     }
+  },
+  // 点击上传按钮调用
+  handleUpload() {
+    uploadSingleImage((fileID) => {
+      // 上传完成后的回调逻辑（每个页面可自定义）
+      if (fileID) {
+        this.setData({ imageUrl: fileID }); // index页面预览图片
+        console.log('index页面上传成功，fileID：', fileID);
+      }
+    });
   }
 });
