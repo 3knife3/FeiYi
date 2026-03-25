@@ -47,5 +47,6 @@
           "selectedIconPath": "images/tabbar/my_selected.png"
         }
       ]
-    }
+    },
+    "lazyCodeLoading": "requiredComponents"
   }

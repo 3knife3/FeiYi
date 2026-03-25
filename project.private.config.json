@@ -22,8 +22,8 @@
     "miniprogram": {
       "list": [
         {
-          "name": "login",
-          "pathName": "pages/my/my",
+          "name": "pages/a/a",
+          "pathName": "pages/a/a",
           "query": "",
           "scene": null,
           "launchMode": "default"

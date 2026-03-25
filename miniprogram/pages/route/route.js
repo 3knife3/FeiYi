@@ -1,105 +1,166 @@
 // pages/route/route.js
 Page({
-
   /**
    * 页面的初始数据
    */
   data: {
     searchKeyword: '',                // 搜索关键词
-    currentCategory: 'all',            // 当前选中的分类，默认'all'代表全部
-    categoryTags: [                    // 分类标签，包含“全部”便于逻辑，但UI隐藏了“全部”按钮，用户可通过清空分类查看全部
-      { label: '亲子', value: '亲子' },
-      { label: '朋友', value: '朋友' },
-      { label: '情侣', value: '情侣' },
-      { label: '家人', value: '家人' }
+    isSearchFocus: false,            // 搜索框是否聚焦
+    currentCategory: 'all',   // 当前选中的分类，默认'all'代表全部
+    categoryTags: [                  // 分类标签
+      { label: '小众好玩', value: '小众好玩' },
+      { label: '趣味打卡', value: '趣味打卡' },
+      { label: '经典必玩', value: '经典必玩' },
+      { label: '省力路线', value: '省力路线' }
     ],
-    // 路线数据 (模拟数据，实际可替换为接口)
+    // 路线数据 (模拟数据)
     allRoutes: [
       {
         id: 1,
-        name: '经典山水漫步',
-        tag: '人气推荐',
-        category: '朋友',
+        name: '水乡秘境地',
+        tag: '人少出片',
+        category: '小众好玩',
         spots: [
-          { name: '迎客松', duration: '30min' },
-          { name: '一线天', duration: '20min' },
-          { name: '天都峰', duration: '1.5h' }
+          { name: '财神庙', duration: '20min' },
+          { name: '明远桥', duration: '15min' },
+          { name: '觉妙净院', duration: '30min' },
+          { name: '进士牌坊', duration: '10min' },
+          { name: '巨济桥', duration: '15min' },
+          { name: '和之梁公祠', duration: '25min' },
+          { name: '游船码头', duration: '20min' },
+          { name: '祥胜桥', duration: '10min' },
+          { name: '郭氏祖祠', duration: '25min' },
+          { name: '石狮巷桥', duration: '10min' },
+          { name: '中心公园', duration: '20min' },
+          { name: '人口文化公园', duration: '15min' },
+          { name: '金鳌桥', duration: '10min' },
+          { name: '刘氏大宗祠', duration: '40min' },
+          { name: '宋参政李公祠', duration: '30min' }
         ]
       },
       {
         id: 2,
-        name: '亲子欢乐之旅',
-        tag: '适合儿童',
-        category: '亲子',
+        name: '桥影打卡线',
+        tag: '拍照打卡',
+        category: '趣味打卡',
         spots: [
-          { name: '熊猫乐园', duration: '1h' },
-          { name: '童话森林', duration: '45min' },
-          { name: '彩虹滑道', duration: '30min' },
-          { name: '萌宠剧场', duration: '40min' }
+          { name: '逢简市场', duration: '28min' },
+          { name: '郭氏祖祠', duration: '10min' },
+          { name: '巨济桥', duration: '10min' },
+          { name: '和之梁公祠', duration: '34min' },
+          { name: '进士牌坊', duration: '14min' },
+          { name: '觉妙净院', duration: '24min' },
+          { name: '明远桥', duration: '20min' },
+          { name: '宋参政李公祠', duration: '31min' },
+          { name: '刘氏大宗祠', duration: '42min' },
+          { name: '金鳌桥', duration: '15min' }
         ]
       },
       {
         id: 3,
-        name: '浪漫情侣步道',
-        tag: '私密',
-        category: '情侣',
+        name: '人间烟火线',
+        tag: '人气推荐',
+        category: '经典必玩',
         spots: [
-          { name: '同心锁桥', duration: '20min' },
-          { name: '日落观景台', duration: '1h' },
-          { name: '玫瑰园', duration: '30min' }
+          { name: '财神庙', duration: '14min' },
+          { name: '明远桥', duration: '17min' },
+          { name: '觉妙净院', duration: '33min' },
+          { name: '进士牌坊', duration: '12min' },
+          { name: '巨济桥', duration: '11min' },
+          { name: '和之梁公祠', duration: '29min' },
+          { name: '游船码头', duration: '25min' },
+          { name: '祥胜桥', duration: '14min' },
+          { name: '郭氏祖祠', duration: '26min' },
+          { name: '石狮巷桥', duration: '13min' },
+          { name: '中心公园', duration: '24min' },
+          { name: '人口文化公园', duration: '25min' },
+          { name: '金鳌桥', duration: '12min' },
+          { name: '刘氏大宗祠', duration: '38min' },
+          { name: '宋参政李公祠', duration: '38min' },
+          { name: '财神庙', duration: '12min' }
         ]
       },
       {
         id: 4,
-        name: '全家福文化线',
+        name: '悠然闲步线',
         tag: '长辈友好',
-        category: '家人',
+        category: '省力路线',
         spots: [
-          { name: '古寺祈福', duration: '40min' },
-          { name: '历史陈列馆', duration: '1h' },
-          { name: '茶歇长廊', duration: '30min' }
+          { name: '游客中心', duration: '15min' },
+          { name: '巨济桥（拍照点）', duration: '25min' },
+          { name: '进士牌坊（美食街）', duration: '40min' },
+          { name: '金鳌桥', duration: '15min' },
+          { name: '游船码头', duration: '20min' }
         ]
       },
       {
         id: 5,
-        name: '户外探险组合',
-        tag: '刺激',
-        category: '朋友',
+        name: '美食水乡线',
+        tag: '顺德美食',
+        category: '趣味打卡',
         spots: [
-          { name: '飞拉达', duration: '2h' },
-          { name: '山顶索道', duration: '25min' },
-          { name: '野餐营地', duration: '1.5h' }
+          { name: '杏坛市场', duration: '15min' },
+          { name: '双桥美食店', duration: '25min' },
+          { name: '明远桥', duration: '40min' },
+          { name: '逢简水乡', duration: '15min' },
+          { name: '觉妙净院', duration: '20min' }
         ]
       },
       {
         id: 6,
-        name: '亲子研学路线',
-        tag: '知识',
-        category: '亲子',
+        name: '官方游览线路1',
+        tag: '推荐正式',
+        category: '经典必玩',
         spots: [
-          { name: '自然博物馆', duration: '1h' },
-          { name: '蝴蝶谷', duration: '50min' },
-          { name: '手工作坊', duration: '1h' }
+          { name: '逢简新地', duration: '10min' },
+          { name: '古钓矶', duration: '15min' },
+          { name: '逢简人口文化公园', duration: '20min' },
+          { name: '石狮巷桥', duration: '10min' },
+          { name: '郭氏祖祠', duration: '25min' },
+          { name: '进士牌坊', duration: '30min' },
+          { name: '巨济桥', duration: '25min' },
+          { name: '和之梁公祠', duration: '20min' },
+          { name: '游船码头', duration: '20min' },
+          { name: '祥胜桥', duration: '10min' },
+          { name: '觉妙净院', duration: '25min' },
+          { name: '明远桥', duration: '15min' },
+          { name: '宋参政李公祠', duration: '20min' },
+          { name: '逢简历史馆', duration: '30min' },
+          { name: '刘氏祠堂', duration: '25min' },
+          { name: '金鳌桥', duration: '15min' }
         ]
       },
       {
         id: 7,
-        name: '夕阳红慢游',
-        tag: '休闲',
-        category: '家人',
+        name: '官方游览线路2',
+        tag: '推荐简约',
+        category: '经典必玩',
         spots: [
-          { name: '荷花池', duration: '30min' },
-          { name: '书画院', duration: '40min' },
-          { name: '养生步道', duration: '1h' }
+          { name: '逢简新地', duration: '10min' },
+          { name: '古钓矶', duration: '12min' },
+          { name: '逢简人口文化公园', duration: '15min' },
+          { name: '石狮巷桥', duration: '8min' },
+          { name: '进士牌坊', duration: '20min' },
+          { name: '巨济桥', duration: '18min' },
+          { name: '和之梁公祠', duration: '15min' },
+          { name: '游船码头', duration: '12min' },
+          { name: '逢简驿站', duration: '10min' }
         ]
-      }
+      },
     ],
     filteredRoutes: [],      // 过滤后展示的路线
-    showModal: false,        // 弹窗显示控制
-    currentRoute: { name: '', spots: [] }   // 当前查看的路线详情
+    showModal: false,        // 路线详情弹窗
+    currentRoute: { name: '', spots: [] },
+    // 地图相关参数
+    showMap: false,          // 地图弹窗开关
+    scale: 1,                // 地图缩放比例
+    lastScale: 1,            // 上一次缩放值
+    tx: 0,                   // X轴偏移
+    ty: 0,                   // Y轴偏移
+    startX: 0,               // 触摸起始X
+    startY: 0,               // 触摸起始Y
+    startDistance: 0         // 双指起始距离
   },
-  
-    // 这里可以后续接入地图导航
 
   /**
    * 生命周期函数--监听页面加载
@@ -109,52 +170,83 @@ Page({
       filteredRoutes: this.data.allRoutes
     });
   },
-  // 搜索框输入
+
+  // 点击搜索框聚焦
+  focusSearch() {
+    this.setData({
+      isSearchFocus: true
+    });
+  },
+
+  // 搜索框输入实时过滤
   onSearchInput(e) {
-    const keyword = e.detail.value.trim().toLowerCase();
-    this.setData({ searchKeyword: e.detail.value });
+    // 1. 获取输入值并统一转小写处理
+    const rawValue = e.detail.value.trim();
+    const keyword = rawValue.toLowerCase();
+    // 2. 保存原始输入（用于页面显示）
+    this.setData({
+      searchKeyword: rawValue
+    });
+    // 3. 执行过滤
     this.filterRoutes(keyword, this.data.currentCategory);
   },
 
-  // 点击完成搜索 (也可和输入实时一致)
+  // 点击完成/回车搜索
   handleSearch() {
-    this.filterRoutes(this.data.searchKeyword.toLowerCase(), this.data.currentCategory);
+    // 1. 统一处理关键词
+    const keyword = this.data.searchKeyword.trim().toLowerCase();
+    // 2. 执行过滤
+    this.filterRoutes(keyword, this.data.currentCategory);
+    // 3. 收起键盘
+    wx.hideKeyboard();
+  },
+
+  // 核心过滤逻辑（精简日志版）
+  filterRoutes(keyword, category) {
+    // 1. 从allRoutes获取原始数据并深拷贝
+    let filteredRoutes = JSON.parse(JSON.stringify(this.data.allRoutes));
+
+    // 2. 第一步：关键词过滤（优先）
+    if (keyword && keyword.trim() !== '') {
+      const lowerKeyword = keyword.toLowerCase().trim();
+      filteredRoutes = filteredRoutes.filter(route => {
+        // 匹配路线名称（转小写）
+        const routeNameMatch = route.name.toLowerCase().includes(lowerKeyword);
+        // 匹配景点名称（支持带括号的名称）
+        const spotNameMatch = route.spots.some(spot => 
+          spot.name.toLowerCase().includes(lowerKeyword)
+        );
+        return routeNameMatch || spotNameMatch;
+      });
+    }
+
+    // 3. 第二步：分类过滤（排除'all'的情况）
+    if (category && category !== 'all') {
+      filteredRoutes = filteredRoutes.filter(route => 
+        route.category === category
+      );
+    }
+
+    // 4. 更新过滤后的数据
+    this.setData({
+      filteredRoutes: filteredRoutes
+    });
   },
 
   // 选择分类标签
   selectCategory(e) {
     const category = e.currentTarget.dataset.category;
-    // 如果点击同一个分类，可以设计为取消选中? 这里简单处理：点击不同切换，再次点击不变。如果需要“全部”，可以加一个全部按钮。但需求只有四个按钮，所以默认当前选中高亮。
-    // 另外用户想要查看全部路线：我们通过搜索框留空 + 任意分类取消？ 实际上加上一个“全部”比较好，但考虑到需求只提到四个，暂时增加一个隐藏逻辑：点击当前激活的分类则置为'all'显示全部，提升体验。
     let newCategory = category;
+    // 点击同个分类，切换为显示全部
     if (this.data.currentCategory === category) {
-      // 如果点击同一个，视为显示全部（取消分类限制）
       newCategory = 'all';
     }
+    // 更新分类并重新过滤
     this.setData({ currentCategory: newCategory });
-    this.filterRoutes(this.data.searchKeyword.toLowerCase(), newCategory);
-  },
-
-  // 过滤路线 (关键词 + 分类)
-  filterRoutes(keyword, category) {
-    let routes = this.data.allRoutes;
-
-    // 关键词过滤 (搜索景点名称或路线名称)
-    if (keyword) {
-      routes = routes.filter(route => {
-        // 路线名称包含关键词
-        if (route.name.toLowerCase().includes(keyword)) return true;
-        // 景点列表中任意景点包含关键词
-        return route.spots.some(spot => spot.name.toLowerCase().includes(keyword));
-      });
-    }
-
-    // 分类过滤 (如果category不是'all')
-    if (category && category !== 'all') {
-      routes = routes.filter(route => route.category === category);
-    }
-
-    this.setData({ filteredRoutes: routes });
+    this.filterRoutes(
+      this.data.searchKeyword.trim().toLowerCase(), 
+      newCategory
+    );
   },
 
   // 打开详情弹窗
@@ -167,61 +259,88 @@ Page({
   },
 
   // 关闭弹窗
-  closeModal(e) {
-    // 如果点击的是蒙层(mask)或者直接点击关闭按钮
+  closeModal() {
     this.setData({ showModal: false });
   },
 
   // 阻止冒泡 (用于弹窗内容点击不关闭)
-  stopPropagation() {
-    // 空函数，仅用于阻止冒泡
+  stopPropagation() {},
+
+  // ===== 地图弹窗逻辑 =====
+  // 打开地图弹窗
+  showMapPopup() {
+    this.setData({
+      showMap: true,
+      scale: 1,
+      lastScale: 1,
+      tx: 0,
+      ty: 0
+    });
   },
+  // 关闭地图弹窗
+  hideMapPopup() {
+    this.setData({ showMap: false });
+  },
+  // 触摸开始（缩放/拖动）
+  touchStart(e) {
+    if (e.touches.length === 2) {
+      // 双指缩放：计算初始距离
+      const x1 = e.touches[0].clientX;
+      const y1 = e.touches[0].clientY;
+      const x2 = e.touches[1].clientX;
+      const y2 = e.touches[1].clientY;
+      this.setData({
+        startDistance: Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2)),
+        lastScale: this.data.scale
+      });
+    }
+  },
+  // 触摸移动（缩放/拖动）
+  touchMove(e) {
+    if (e.touches.length === 2) {
+      // 双指缩放（限制0.8-2倍）
+      const x1 = e.touches[0].clientX;
+      const y1 = e.touches[0].clientY;
+      const x2 = e.touches[1].clientX;
+      const y2 = e.touches[1].clientY;
+      const distance = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+      const scale = (distance / this.data.startDistance) * this.data.lastScale;
+      this.setData({ scale: Math.max(0.8, Math.min(2, scale)) });
+    }
+  },
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady() {
-
-  },
+  onReady() {},
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow() {
-
-  },
+  onShow() {},
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide() {
-
-  },
+  onHide() {},
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload() {
-
-  },
+  onUnload() {},
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh() {
-
-  },
+  onPullDownRefresh() {},
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom() {
-
-  },
+  onReachBottom() {},
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage() {
-
-  }
-})
+  onShareAppMessage() {}
+});

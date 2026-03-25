@@ -92,7 +92,7 @@ Page({
           wx.cloud.callFunction({
             name: "wechatLogin",
             data: {
-              code: res.code,  // <-- 关键：openid 凭证
+              code: res.code,  // <-- 关键：OPENID 凭证
               avatar: avatarUrl,
               name: tempName
             }
@@ -101,6 +101,8 @@ Page({
             const result = res.result
 
             if (result.code === 0) {
+                const userInfo = result.userInfo
+                userInfo.OPENID = result.OPENID  // 👈 我加的
               wx.setStorageSync('userInfo', result.userInfo)
               this.setData({
                 userInfo: result.userInfo,

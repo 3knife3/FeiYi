@@ -33,7 +33,8 @@ Page({
 
     // 首页快捷键跳转栏目函数
     onShow() {
-        const targetTab = getApp().globalData.scienceTab || "scenery";
+        const app = getApp() || {};
+        const targetTab = (app.globalData && app.globalData.scienceTab) || "scenery";
         this.setData({
           currentTab: targetTab
         }, () => {

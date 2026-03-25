@@ -1,5 +1,5 @@
 // 云函数：wechatLogin
-// 功能：通过 code 获取 openid，实现唯一用户登录
+// 功能：通过 code 获取 OPENID，实现唯一用户登录
 const cloud = require('wx-server-sdk')
 cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV })
 
@@ -8,7 +8,7 @@ exports.main = async (event, context) => {
   const { code, name, avatar } = event
   const wxContext = cloud.getWXContext()
 
-  // 获取用户唯一 openid
+  // 获取用户唯一 OPENID
   const OPENID = wxContext.OPENID
 
   // 数据库
@@ -16,7 +16,7 @@ exports.main = async (event, context) => {
   const userCollection = db.collection('users')
 
   try {
-    // 按 openid 查询用户（唯一！）
+    // 按 OPENID 查询用户（唯一！）
     const userRes = await userCollection.where({ OPENID }).get()
 
     let userInfo
@@ -24,10 +24,10 @@ exports.main = async (event, context) => {
       // 已有账号 → 直接登录
       userInfo = userRes.data[0]
     } else {
-      // 新用户 → 创建账号（用 openid 唯一标记）
+      // 新用户 → 创建账号（用 OPENID 唯一标记）
       const addRes = await userCollection.add({
         data: {
-          openid: OPENID,
+          OPENID: OPENID,
           name: name,
           avatar: avatar,
           score: 0,        // 积分
