@@ -1,32 +1,49 @@
-<!--pages/my/my.wxml-->
-<block wx:if="{{userInfo==null}}">
-    <view class="login-area">
-        <button class="btn" bind:tap="goLogin">点击登录</button>
-    </view>
+<!--pages/login/login.wxml-->
+<view class="container">
+
+<!-- 登陆前：横向布局 + 整体可点击 -->
+<block wx:if="{{!userInfo}}">
+  <view class="login-before" bind:tap="goLogin">
+    <image class="avatar-default" src="/images/login/DefaultAvatar.png"></image>
+    <text class="login-text">你好，请登录！</text>
+    <van-icon name="arrow" size="50rpx"/>
+  </view>
 </block>
+
+<!-- 登录后 -->
 <block wx:else>
-    <view class="container">
-        <view class="top-view">
-            <view class="user">
-                <view class="row">
-                    <image class="avatar" src="{{userInfo.avatar}}"></image>
-                    <view class="name">
-                        <view bind:tap="logout">{{userInfo.name}}</view>
-                    </view>
-                </view>
-            </view>
-            <view class="numbers">
-                <view class="row">
-                    <text>{{userInfo.score}}</text>
-                    <text>积分</text>
-                </view>
-            </view>
+  <view class="user-info-card">
+    <view class="user-profile">
+      <view class="user-row">
+        <image class="avatar-user" src="{{userInfo.avatar}}"></image>
+        <view class="user-name">
+          <view bind:tap="logout" class="logout-txt">{{userInfo.name}}</view>
         </view>
-        <view class="choice">
-         <van-cell class="choice-item" title="积分兑换记录" is-link bind:tap="goToOrder" />
-         <van-cell title="关于我们" is-link bind:tap="showContact" />
-         <van-dialog title="关于我们" message="本小程序由学生团队开发。" show="{{showContact}}" bind:confirm="onConfirm">
-         </van-dialog>
-        </view>
+      </view>
     </view>
+
+    <view class="user-data">
+      <view class="data-item">
+        <text class="data-num">{{userInfo.score}}</text>
+        <text class="data-label">积分</text>
+      </view>
+      <view class="data-item">
+        <text class="data-label">碎片</text>
+      </view>
+    </view>
+  </view>
 </block>
+
+<!-- 选项 -->
+<view class="menu-list">
+  <van-cell class="menu-item" title="积分兑换记录" is-link bind:tap="goToOrder" />
+  <van-cell class="menu-item" title="关于我们" is-link bind:tap="showContact" />
+  <van-dialog 
+    title="关于我们" 
+    message="本小程序由学生团队开发。" 
+    show="{{showContact}}" 
+    bind:confirm="onConfirm">
+  </van-dialog>
+</view>
+
+</view>

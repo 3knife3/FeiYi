@@ -1,102 +1,109 @@
-/* pages/my/my.wxss */
-page{
-    height: 100%;
-    width: 100%;
+/* pages/login/login.wxss */
+page {
+    background-color: #f7f8fa;
     margin: 0;
     padding: 0;
-}
-.container{
+  }
+  
+  /* 全屏容器 */
+  .container {
+    width: 100%;
+    min-height: 100vh;
+    box-sizing: border-box;
+    margin: 0 auto;
+  }
+  
+  /* 未登录：横向 flex + 全屏宽 + 可点击 */
+  .login-before {
+    width: 100%;
     display: flex;
-    flex-direction: column;
-    padding-top: 0;
-}
-.login-area{
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    flex-direction: row;
     align-items: center;
-}
-.login-area .btn{
-    width: 200rpx;
-    height: 200rpx;
-    border-radius: 500%;
-    background-color: #5cb85c;
-    color: white;
+    justify-content: flex-start;
+    padding: 30rpx 40rpx;
+    box-sizing: border-box;
+    background: #fff;
+    margin-bottom: 20rpx;
+  }
+  
+  .avatar-default {
+    width: 130rpx;
+    height: 130rpx;
+    border-radius: 100%;
+    margin-right: 24rpx;
+    background: #f2f3f5;
+  }
+  
+  .login-text {
+    font-size: 42rpx;
+    color: #333;
+  }
+  
+  /* 登录后卡片 */
+  .user-info-card {
+    background: white;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 36rpx 40rpx;
+    margin-bottom: 20rpx;
+  }
+  
+  .user-row {
     display: flex;
-}
-.user-area{
-    height: 100%;
+    align-items: center;
+  }
+  
+  .avatar-user {
+    width: 130rpx;
+    height: 130rpx;
+    border-radius: 100%;
+    margin-right: 24rpx;
+  }
+  
+  .user-name {
+    font-size: 42rpx;
+    font-weight: 500;
+    color: #333;
+  }
+  
+  .logout-txt {
+    color: #666;
+    font-size: 42rpx;
+  }
+  
+  .user-data {
+    display: flex;
+    justify-content: space-around;
+    border-top: 1rpx solid #f2f3f5;
+    padding-top: 30rpx;
+    margin-top: 30rpx;
+  }
+  
+  .data-item {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-}
-.user-area image{
-    width: 200rpx;
-    height: 200rpx;
-    border-radius: 500%;
-}
-.user-area .name{
+  }
+  
+  .data-num {
+    font-size: 40rpx;
+    font-weight: bold;
+    color: #1677ff;
+  }
+  
+  .data-label {
+    font-size: 26rpx;
+    color: #999;
+    margin-top: 6rpx;
+  }
+  
+  /* 菜单全屏 */
+  .menu-list {
+    width: 100%;
+    background: white;
+  }
+  
+  .menu-item {
+    padding: 30rpx 40rpx;
     font-size: 30rpx;
-    padding: 30rpx 0;
-}
-.user-area .logout{
-    color: #a94442;
-}
-.top-view{
-    background-color: #01ccb6;
-    width: 100%;
-    color: white;
-    padding: 40rpx;
-}
-.top-view .user{
-    display: flex;
-    font-display: row;
-    justify-content: space-between;
-    align-items: center;
-}
-.top-view .user .row{
-    width: 100%;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-}
-.top-view .user .avatar{
-    width: 100rpx;
-    height: 100rpx;
-    border-radius: 50%;
-}
-.top-view .user .name{
-    display: flex;
-    font-display: row;
-    justify-content: flex-start;
-    padding-left: 20rpx;
-}
-.top-view .user .name navigator{
-    padding:0 5rpx;
-}
-.top-view .site{
-    background-color: rgba(0, 0, 0, 0.16);
-    padding: 15rpx;
-    margin: 20rpx;
-    width: 40%;
-    border-radius: 32rpx;
-}
-.top-view .numbers{
-    display: flex;
-    font-display: row;
-    justify-content: space-between;
-    font-size: 28rpx;
-    padding: 40rpx;
-    padding-bottom: 0rpx;
-}
-.top-view .numbers .row{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-.choice{
-    width: 100%;
-    flex:1;
-}
+  }

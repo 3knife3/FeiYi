@@ -1,0 +1,25 @@
+<!--pages/login/login.wxml-->
+<view class="container">
+
+  <!-- 头像选择区域 -->
+  <view class="avatar-box">
+    <button class="avatar-wrapper" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
+      <image class="avatar" src="{{avatarUrl}}"></image>
+    </button>
+    <view class="avatar-tip">点击设置头像</view>
+  </view>
+
+  <!-- 昵称输入区域 + 一键获取微信昵称 -->
+  <view class="input-box">
+    <input 
+      type="nickname" 
+      class="weui-input" 
+      placeholder="请输入昵称" 
+      value="{{tempName}}"
+      bindinput="onInputName"
+    />
+  </view>
+
+  <!-- 登录提交按钮 -->
+  <button class="submit-btn" bind:tap="submitLogin">确认登录</button>
+</view>

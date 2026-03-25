@@ -1,5 +1,4 @@
 // pages/shop/shop.js
-const { uploadSingleImage } = require('../../utils/uploadImage.js');
 
 Page({
   /**
@@ -37,59 +36,67 @@ Page({
     this.setData({ showSign: false });
   },
   
+    // ======================
+    // 统一登录校验（未登录自动跳转 login）
+    // ======================
+    checkLogin() {
+      const userInfo = wx.getStorageSync('userInfo')
+      console.log("当前登录信息：", userInfo)
   
-  // 分享弹窗
-  showShare() {this.setData({showShare: true})},
-  closeSharePopup() {
-    this.setData({ showShare: false });
-  },
-
-  // 打卡弹窗
-  showCheckIn() {this.setData({showCheckIn: true})},
-  doCheckIn() {
-    wx.showToast({title:'打卡成功 +20', icon:"success"})
-    this.setData({
-      userScore: this.data.userScore + 20,
-      showCheckIn: false
-    })
-  },
-  closeCheckInPopup() {
-    this.setData({ showCheckIn: false });
-  },
-
-  // 兑换
-  // 显示兑换确认的弹窗
-  showExchangeModal(e) {
-    const {id, cost, name} = e.currentTarget.dataset;
-    this.setData({
-      showModal: true,
-      selectedId: id,
-      selectedCost: cost,
-      selectedName: name
-    })
-  },
-  // 隐藏弹窗（取消兑换）
-  hideModal() {
-    this.setData({showModal: false});
-  },
-  // 确认兑换（校验 + 扣减积分）
-  confirmExchange() {
-    const {userScore, selectedCost, selectedName} = this.data;
-    if (userScore < selectedCost) {
-      wx.showToast({
-        title:'积分不足，无法兑换',
-        icon: 'none',
-        duration: 2000
-      });
-      this.hideModal();
-      return;
-    }
-    wx.showLoading({title: '兑换中...'});
-    // 模拟接口请求
-    setTimeout(() => {
-      wx.hideLoading();
-      this.setData({
-        userScore: userScore - selectedCost
+      if (!userInfo) {
+        wx.showModal({
+          title: '提示',
+          content: '请先登录',
+          showCancel: false,
+          success: () => {
+            wx.navigateTo({
+              url: '/pages/login/login'
+            })
+          }
+        })
+        return false
+      }
+  
+      this.setData({ userInfo })
+      return true
+    },
+  
+    onLoad() {
+      this.initScore()
+    },
+  
+    onShow() {
+      this.initScore()
+    },
+  
+    initScore() {
+      const userInfo = wx.getStorageSync('userInfo')
+      if (userInfo) {
+        this.setData({
+          userInfo,
+          userScore: userInfo.score || 0
+        })
+      }
+    },
+  
+    // ======================
+    // 每日签到（未登录→跳转）
+    // ======================
+    showSign() {
+      if (!this.checkLogin()) return
+      this.setData({ showSign: true })
+    },
+  
+    doSign() {
+      const { userInfo } = this.data
+      wx.cloud.callFunction({
+        name: 'updateScore',
+        data: { openid: userInfo.OPENID, changeScore: 50 }
+      }).then(res => {
+        userInfo.score = res.result.newScore
+        wx.setStorageSync('userInfo', userInfo)
+        this.setData({ userScore: res.result.newScore, showSign: false })
+        wx.showToast({ title: '签到成功 +50', icon: 'success' })
       })
 
       wx.showToast({
@@ -101,8 +108,7 @@ Page({
       this.hideModal();
 
       // wx.navigateTo({url: ''}, 1000)
-    }, 400)
-  },
+    },
   
   // 积分明细
   goDetail() {
