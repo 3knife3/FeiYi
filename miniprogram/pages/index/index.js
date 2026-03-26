@@ -112,80 +112,36 @@ Page({
         wx.showToast({title: '功能暂未开放', icon: 'none'});  
     }
   },
-//   previewMap() {
-//     // // 1. 获取文件管理器
-//     // const fs = wx.getFileSystemManager();
-//     // // 2. 你的图片本地路径（注意：去掉开头的 /，改为相对路径）
-//     // const localPath = 'images/map/new_map.png';
 
-//   const cloudUrl = "cloud://cloud1-2gp5ez590981c671.map/new_map.png";
-//   // 打印日志，看有没有执行到这里
-//   console.log("✅ 预览地图执行");
-//   console.log("✅ 云端图片地址：", cloudUrl);
-
-//     try {
-//       // 3. 读取本地文件转成临时路径 (这是关键！)
-//       const fileContent = fs.readFileSync(localPath, 'base64');
-//       const tempPath = `data:image/jpg;base64,${fileContent}`;
-
-//       // 4. 调用原生预览（此时用的是base64临时路径，必能加载）
-//     //   wx.previewImage({
-//     //     current: tempPath,
-//     //     urls: [tempPath],
-//     //     fail: (err) => {
-//     //       console.error('预览失败', err);
-//     //       wx.showToast({ title: '图片加载失败', icon: 'none' });
-//     //     }
-//     //   });
-
-//   wx.previewImage({
-//     current: cloudUrl,
-//     urls: [cloudUrl],
-//     fail: (err) => {
-//       console.error("预览失败", err);
-//     }
-//   });
-//     } catch (e) {
-//       // 捕获错误：99%是路径写错了
-//       wx.showToast({
-//         title: `图片不存在: ${localPath}`,
-//         icon: 'none',
-//         duration: 3000
-//       });
-//       console.error('文件读取失败，请检查路径：', e);
-//     }
-//   },
-  // 点击上传按钮调用
-  
   previewMap() {
-    console.log("✅ 点击预览地图");
-    const realCloudUrl = "cloud://cloud1-2gp5ez590981c671.636c-cloud1-2gp5ez590981c671-1383410318/map/new_map.png";
-
-    wx.cloud.getTempFileURL({
-      fileList: [realCloudUrl],
-      success: (res) => {
-        const tempUrl = res.fileList[0].tempFileURL;
-        console.log("✅ 临时预览地址：", tempUrl);
-
-        wx.previewImage({
-          current: tempUrl,
-          urls: [tempUrl],
-          success: () => {
-            console.log("✅ 预览成功！");
-          },
-          fail: (err) => {
-            console.error("❌ 预览失败：", err);
-          }
-        });
-      },
-      fail: (err) => {
-        console.error("❌ 获取临时地址失败：", err);
-      }
-    });
+    setTimeout(() => {
+      console.log("✅ 转临时文件后预览本地地图");
+      const localImagePath = "/images/map/map.png";
+  
+      // 1. 获取文件管理器
+      const fs = wx.getFileSystemManager();
+      // 2. 读取本地图片为 base64
+      const base64 = fs.readFileSync(localImagePath, "base64");
+      // 3. 写入临时文件
+      const tempPath = `${wx.env.USER_DATA_PATH}/temp_map.png`;
+      fs.writeFileSync(tempPath, base64, "base64");
+  
+      // 4. 用临时文件预览
+      wx.previewImage({
+        current: tempPath,
+        urls: [tempPath],
+        success: () => {
+          console.log("✅ 临时文件预览成功（弹窗已显示）");
+        },
+        fail: (err) => {
+          console.error("❌ 临时文件预览失败", err);
+        }
+      });
+    }, 200);
   },
 
 
-  // 获取云图片临时地址（给页面显示用）
+//   获取云图片临时地址（给页面显示用）
   getMapUrl() {
     // 👇 这是你云存储里的真实完整路径！从云开发控制台复制过来！
     const realCloudUrl = "cloud://cloud1-2gp5ez590981c671.636c-cloud1-2gp5ez590981c671-1383410318/map/new_map.png";
