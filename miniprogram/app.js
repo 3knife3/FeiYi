@@ -13,8 +13,7 @@ App({
   },
 
   globalData: {
-    userInfo: null,  // 你原来就有的
-    // ↓↓↓ 只需要加这一行 ↓↓↓
+    userInfo: null,
     scienceTab: ''   
   }
 })

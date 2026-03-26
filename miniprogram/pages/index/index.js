@@ -114,30 +114,19 @@ Page({
   },
 
   previewMap() {
-    setTimeout(() => {
-      console.log("✅ 转临时文件后预览本地地图");
-      const localImagePath = "/images/map/map.png";
+    // 直接用你拿到的云存储外网地址
+    const cloudImageUrl = "https://636c-cloud1-2gp5ez590981c671-1383410318.tcb.qcloud.la/map/new_map.png?sign=9124e499f4bd70946710d9ad4609472c&t=1774539541";
   
-      // 1. 获取文件管理器
-      const fs = wx.getFileSystemManager();
-      // 2. 读取本地图片为 base64
-      const base64 = fs.readFileSync(localImagePath, "base64");
-      // 3. 写入临时文件
-      const tempPath = `${wx.env.USER_DATA_PATH}/temp_map.png`;
-      fs.writeFileSync(tempPath, base64, "base64");
-  
-      // 4. 用临时文件预览
-      wx.previewImage({
-        current: tempPath,
-        urls: [tempPath],
-        success: () => {
-          console.log("✅ 临时文件预览成功（弹窗已显示）");
-        },
-        fail: (err) => {
-          console.error("❌ 临时文件预览失败", err);
-        }
-      });
-    }, 200);
+    wx.previewImage({
+      current: cloudImageUrl,
+      urls: [cloudImageUrl],
+      success: () => {
+        console.log("✅ 云存储图片预览成功");
+      },
+      fail: (err) => {
+        console.error("❌ 预览失败", err);
+      }
+    });
   },
 
 
