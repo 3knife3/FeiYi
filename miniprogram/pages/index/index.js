@@ -130,23 +130,17 @@ Page({
   },
 
 
-//   获取云图片临时地址（给页面显示用）
-  getMapUrl() {
-    // 👇 这是你云存储里的真实完整路径！从云开发控制台复制过来！
-    const realCloudUrl = "cloud://cloud1-2gp5ez590981c671.636c-cloud1-2gp5ez590981c671-1383410318/map/new_map.png";
-    
-    wx.cloud.getTempFileURL({
-      fileList: [realCloudUrl],
-      success: (res) => {
-        console.log("✅ 页面地图地址获取成功", res.fileList[0].tempFileURL);
-        this.setData({
-          mapUrl: res.fileList[0].tempFileURL // 赋值给页面
-        });
-      },
-      fail: (err) => {
-        console.error("❌ 获取地图地址失败", err);
-      }
+// 获取地图永久外网地址（公共读，直接显示）
+getMapUrl() {
+    // 👇 直接填你的云存储【永久外网地址】
+    const permanentUrl = "https://636c-cloud1-2gp5ez590981c671-1383410318.tcb.qcloud.la/map/new_map.png";
+  
+    // 直接赋值，不需要调用任何接口
+    this.setData({
+      mapUrl: permanentUrl
     });
+  
+    console.log("✅ 地图使用永久外网地址：", permanentUrl);
   },
 
   handleUpload() {

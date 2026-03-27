@@ -40,7 +40,7 @@
 <view class="map-box">
   <text class="map-title">地图区域</text>
   <view class="map-preview" bindtap="previewMap">
-    <image class="map-img" src="https://636c-cloud1-2gp5ez590981c671-1383410318.tcb.qcloud.la/map/new_map.png?sign=9124e499f4bd70946710d9ad4609472c&t=1774539541"></image>
+    <image class="map-img" src="https://636c-cloud1-2gp5ez590981c671-1383410318.tcb.qcloud.la/map/new_map.png?sign=6b5f740f291db4880dfbc86d7a020252&t=1774586816"></image>
     <text class="map-tip">点击放大</text>
   </view>
 </view>
