@@ -33,6 +33,10 @@
       class="goods-item"
       wx:for="{{ list }}"
       wx:key="id"
+      data-id="{{ item.id }}"
+      data-name="{{ item.name }}"
+      data-cost="{{ item.cost }}"
+      bindtap="exchangeGoods"
     >
       <image
         class="goods-img"

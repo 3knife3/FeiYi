@@ -151,7 +151,39 @@ Page({
     wx.setStorageSync('userInfo', user);
     this.setData({ userScore: newScore });
   },
+  // 兑换商品
+  exchangeGoods(e) {
+    if (!this.checkLogin()) return;
 
+    const { id, name, cost } = e.currentTarget.dataset;
+    const { userScore } = this.data;
+
+    // 积分不足
+    if (userScore < cost) {
+      wx.showToast({
+        title: '积分不足',
+        icon: 'error'
+      });
+      return;
+    }
+
+    // 确认兑换
+    wx.showModal({
+      title: '确认兑换',
+      content: `确定要兑换【${name}】吗？\n消耗：${cost} 积分`,
+      success: (res) => {
+        if (res.confirm) {
+          // 扣除积分
+          this.updateScore(-cost);
+
+          wx.showToast({
+            title: '兑换成功！',
+            icon: 'success'
+          });
+        }
+      }
+    });
+  },
   // 工具
   checkLogin() {
     const userInfo = wx.getStorageSync('userInfo');
