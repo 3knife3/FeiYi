@@ -40,7 +40,31 @@
 <view class="map-box">
   <text class="map-title">地图区域</text>
   <view class="map-preview" bindtap="previewMap">
-    <image class="map-img" src="cloud://cloud1-2gp5ez590981c671.map/new_map.png"></image>
+    <image class="map-img" src="cloud://cloud1-2gp5ez590981c671.636c-cloud1-2gp5ez590981c671-1383410318/map/new_map.png"></image>
     <text class="map-tip">点击放大</text>
+  </view>
+</view>
+
+
+<!-- 6. 打卡弹窗  -->
+<view wx:if="{{showPopup}}" class="check-popup">
+  <view class="popup-mask" bindtap="closePopup"></view>
+  <view class="popup-content">
+    <view class="popup-title">景点打卡</view>
+    
+    <view class="point-grid">
+      <view 
+        wx:for="{{points}}" 
+        wx:key="id"
+        data-index="{{index}}"
+        bindtap="checkPoint"
+        class="point-item {{item.checked ? 'active' : ''}}"
+      >
+        {{item.name}}
+      </view>
+    </view>
+
+    <view class="score-info">当前积分：{{userScore}}</view>
+    <button class="close-btn" bindtap="closePopup" type="primary">关闭</button>
   </view>
 </view>

@@ -1,13 +1,14 @@
 const defaultAvatarUrl = '/images/login/DefaultAvatar.png'
+const app = getApp()
 
 Page({
     data: {
-      userInfo:
-      null,
+      userInfo: null,
       showContact: false,
       showLoginPopup: false,
       avatarUrl: defaultAvatarUrl, // 保留你原来的
-      tempName: "" // 只补一个缺失的变量
+      tempName: "", // 只补一个缺失的变量
+      userScore: 0
     },
     onChooseAvatar(e) {
         // 关键：用户取消选择时，不执行逻辑
@@ -36,7 +37,8 @@ Page({
         this.checkLogin()
         // +++++++++++++ 【新增】积分实时刷新 +++++++++++++
         this.setData({
-          userInfo: wx.getStorageSync('userInfo')
+          userInfo: wx.getStorageSync('userInfo'),
+          userScore: app.globalData.score
         })
       },
 

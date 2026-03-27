@@ -22,29 +22,22 @@
 <!-- 任务栏 -->
 <view class="task-wrap">
   <van-button type="primary" plain size="small" bind:click="showSign">每日签到</van-button>
-  <van-button type="warning" plain size="small" bind:click="showCheckIn">打卡得积分</van-button>
+  <van-button type="warning" plain size="small" bind:click="openCheckPopup">打卡得积分</van-button>
   <van-button type="info" plain size="small" bind:click="showShare">分享得积分</van-button>
 </view>
 
-<!-- 两列商品列表 -->
+<!-- 商品列表 -->
 <view class="task-wrap">
-  <!-- 用原生 view 做两列网格，完全可控 -->
   <view class="goods-container">
     <view
       class="goods-item"
       wx:for="{{ list }}"
       wx:key="id"
-      bind:tap="showExchangeModal"
-      data-id="{{item.id}}"
-      data-cost="{{item.cost}}"
-      data-name="{{item.name}}"
     >
-      <!-- 图片：直接放这里，完全不受 van 组件限制 -->
       <image
         class="goods-img"
         src="{{ item.img }}"
         mode="widthFix"
-        binderror="imgError"
       ></image>
       <view class="goods-name">{{ item.name }}</view>
       <view class="goods-cost">{{ item.cost }} 积分</view>
@@ -52,23 +45,8 @@
   </view>
 </view>
 
-<!-- 底部规则 -->
-<view class="rule">
-  {{rule}}
-</view>
-
-<!-- 兑换弹窗 -->
-<view class="modal-mask" wx:if="{{showModal}}" bind:tap="hideModal"></view>
-<view class="modal-content" wx:if="{{showModal}}" >
-  <view class="modal-title">兑换确认</view>
-  <view class="modal-desc">
-    你确定要消耗 <text class="cost-text">{{selectedCost}}</text> 积分兑换 <text class="name-text">{{selectedName}}</text> 吗？
-  </view>
-  <view class="modal-btn-group">
-    <button class="cancel-btn" bind:tap="hideModal">取消</button>
-    <button class="confirm-btn" bind:tap="confirmExchange">兑换</button>
-  </view>
-</view>
+<!-- 规则 -->
+<view class="rule">{{rule}}</view>
 
 <!-- 签到弹窗 -->
 <van-popup show="{{ showSign }}" position="center" round>
@@ -83,8 +61,8 @@
 
 <!-- 分享弹窗 -->
 <van-popup show="{{ showShare }}" position="center" round>
-  <view class="popup-content">
-    <view class="popup-close" bind:tap="closeSharePopup">x</view>
+  <view class="popup-content share-card">
+    <view class="popup-close" bind:tap="closeSharePopup">×</view>
     <view class="title">分享好友</view>
     <view class="desc">分享成功 +30 积分（每日1次）</view>
     <van-button type="info" block open-type="share">分享给好友</van-button>
@@ -93,15 +71,23 @@
 </van-popup>
 
 <!-- 打卡弹窗 -->
-<van-popup show="{{ showCheckIn }}" position="center" round>
+<view class="check-popup" wx:if="{{showPopup}}">
+  <view class="popup-mask" bindtap="closePopup"></view>
   <view class="popup-content">
-    <view class="popup-close" bind:tap="closeCheckInPopup">x</view>
-    <view class="title">每日打卡</view>
-    <view class="desc">今日打卡可领 +20 积分</view>
-    <van-button type="warning" block bind:click="doCheckIn">立即打卡</van-button>
-    <view class="info">每日限1次|打卡后积分实时到账</view>
+    <view class="popup-title">景点打卡</view>
+    <view class="point-grid">
+      <view 
+        wx:for="{{points}}" 
+        wx:key="id"
+        data-index="{{index}}"
+        bindtap="checkPoint"
+        class="point-item {{item.checked ? 'active' : ''}}"
+      >
+        {{item.name}}
+      </view>
+    </view>
+    <view class="score-info">当前积分：{{userScore}}</view>
+    <button class="close-btn" bindtap="closePopup" type="primary">关闭</button>
   </view>
-</van-popup>
+</view>
 
-<button bindtap="handleUpload" type="primary">上传图片</button>
-<image wx:if="{{imageUrl}}" src="{{imageUrl}}" mode="widthFix" style="width: 100%; margin-top: 20rpx;" />

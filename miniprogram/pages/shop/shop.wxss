@@ -1,10 +1,11 @@
-/* pages/shop/shop.wxss */
-/* 定位到label并修改颜色 */
+/* pages/shop/shop.wxss  */
+/* 顶部积分标签颜色 */
 .custom-score-cell .van-cell__label {
-  color: #FF7800 !important; 
-  font-size: 12px; 
+  color: #FF7800;
+  font-size: 24rpx;
 }
-/* 兑换弹窗遮罩层 */
+
+/* 兑换弹窗 */
 .modal-mask {
   position: fixed;
   top: 0;
@@ -14,8 +15,6 @@
   background: rgba(0, 0, 0, 0.5);
   z-index: 999;
 }
-
-/* 兑换弹窗内容 */
 .modal-content {
   position: fixed;
   top: 50%;
@@ -28,14 +27,12 @@
   box-sizing: border-box;
   z-index: 1000;
 }
-
 .modal-title {
   font-size: 36rpx;
   font-weight: bold;
   text-align: center;
   margin-bottom: 20rpx;
 }
-
 .modal-desc {
   font-size: 28rpx;
   color: #333;
@@ -43,8 +40,6 @@
   line-height: 1.6;
   margin-bottom: 30rpx;
 }
-
-/* 高亮显示积分和商品名 */
 .cost-text {
   color: #ff4444;
   font-weight: bold;
@@ -53,13 +48,10 @@
   color: #1989fa;
   font-weight: bold;
 }
-
-/* 兑换按钮组 */
 .modal-btn-group {
   display: flex;
   gap: 20rpx;
 }
-
 .cancel-btn, .confirm-btn {
   flex: 1;
   height: 80rpx;
@@ -67,42 +59,40 @@
   border-radius: 40rpx;
   font-size: 28rpx;
 }
-
 .cancel-btn {
   background: #f5f5f5;
   color: #666;
 }
-
 .confirm-btn {
   background: #ff4444;
   color: #fff;
 }
 
-/* 商品栏 */
+/* 任务按钮栏 */
 .task-wrap {
   padding: 20rpx;
-  /* 核心：弹性布局让按钮均匀分布 */
   display: flex;
-  align-items: center; /* 垂直居中 */
+  align-items: center;
   box-sizing: border-box;
 }
-
-/* 适配van-button样式，统一按钮宽度+高度 */
 .task-wrap .van-button {
-  flex: 1; /* 三个按钮平分宽度 */
-  height: 70rpx; /* 统一按钮高度，更美观 */
-  font-size: 26rpx; /* 适配移动端字体大小 */
-  border-radius: 8rpx; /* 圆角更协调 */
+  flex: 1;
+  height: 70rpx;
+  font-size: 26rpx;
+  border-radius: 8rpx;
 }
 
-
+/* 商品列表 */
 .goods-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 20rpx;
+  justify-content: space-between; /* 使用space-between自动分配间隙 */
+  padding: 0 5rpx;
+  box-sizing: border-box;
 }
+
 .goods-item {
-  width: calc(50% - 10rpx);
+  width: calc(50% - 15rpx); /* 减去间隙的一半，间隙越大减的越多 */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -110,22 +100,38 @@
   border-radius: 12rpx;
   padding: 15rpx;
   box-sizing: border-box;
+  margin-bottom: 20rpx;
 }
+
 .goods-img {
-  width: 100%;
-  height: auto;
+  width: 100% !important;
+  height: 200rpx !important;
   border-radius: 12rpx;
   display: block;
+  aspect-ratio: 1 / 1; /* 设置图片为正方形，保持统一比例 */
+  object-fit: cover; /* 图片填充方式 */
 }
+
 .goods-name {
   font-size: 28rpx;
   margin-top: 15rpx;
   color: #333;
+  text-align: center;
+  width: 100%; /* 确保文字换行 */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* 最多显示2行 */
+  -webkit-box-orient: vertical;
 }
+
 .goods-cost {
   color: #ff4444;
   font-size: 26rpx;
   margin-top: 6rpx;
+  text-align: center;
+  font-weight: bold; /* 价格加粗更醒目 */
+  width: 100%; /* 确保价格占满宽度 */
 }
 .rule {
   text-align: center;
@@ -134,46 +140,118 @@
   padding: 30rpx;
 }
 
-
-/* 分享、打卡弹窗样式 */
+/* 通用弹窗样式（签到、分享 用这个）*/
 .popup-content {
-  width: 600rpx;
-  padding: 40rpx;
+  width: 580rpx;
+  padding: 50rpx 40rpx;
   text-align: center;
   position: relative;
-  padding-top: 20rpx;
+  border-radius: 24rpx;
+  background: #fff;
 }
+
+/* 关闭按钮 × */
 .popup-close {
   position: absolute;
-  top: 10rpx;
-  right: 10rpx;
-  width: 56rpx;
-  height: 56rpx;
-  line-height: 56rpx;
+  top: 20rpx;
+  right: 20rpx;
+  width: 50rpx;
+  height: 50rpx;
+  line-height: 50rpx;
   text-align: center;
-  font-size: 36rpx;
-  color: #666;
+  font-size: 32rpx;
+  color: #999;
   background: #f5f5f5;
   border-radius: 50%;
-  /* 点击反馈 */
-  touch-action: manipulation;
 }
 .popup-close:active {
-  background: #ff4444;
+  background: #ff4d4f;
   color: #fff;
 }
+
+/* 标题 / 描述 / 小字 */
 .popup-content .title {
   font-size: 36rpx;
   font-weight: bold;
+  color: #333;
+  margin-bottom: 16rpx;
 }
-
 .popup-content .desc {
-  margin: 20rpx 0;
+  margin: 10rpx 0 30rpx;
   font-size: 28rpx;
+  color: #666;
+  line-height: 1.5;
 }
-
 .popup-content .info {
-  margin-top: 20rpx;
+  margin-top: 24rpx;
   font-size: 24rpx;
   color: #999;
+}
+
+/* 分享弹窗 */
+.share-card {
+  padding: 60rpx 40rpx;
+}
+.share-card .title {
+  color: #1677ff;
+  font-weight: 800;
+}
+.share-card .desc {
+  color: #555;
+}
+
+/* 打卡弹窗 */
+
+.check-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+}
+.popup-mask {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+}
+.check-popup .popup-content {
+  position: relative;
+  width: 90%;
+  margin: 120rpx auto 0;
+  background: #fff;
+  border-radius: 24rpx;
+  padding: 40rpx;
+}
+.check-popup .popup-title {
+  font-size: 36rpx;
+  text-align: center;
+  margin-bottom: 30rpx;
+}
+.point-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20rpx;
+}
+.point-item {
+  height: 120rpx;
+  background: #f2f2f2;
+  border-radius: 16rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28rpx;
+}
+.point-item.active {
+  background: #09BB07;
+  color: #fff;
+}
+.score-info {
+  text-align: center;
+  margin: 30rpx 0;
+  font-size: 28rpx;
+}
+.close-btn {
+  width: 100%;
 }
