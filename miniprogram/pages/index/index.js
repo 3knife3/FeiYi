@@ -6,7 +6,15 @@ const app = getApp();
 Page({
   data: {
     mapUrl: "", // 页面显示用的临时地址
-    swiperList: [], // 空的，我们从云函数拿Base64
+    swiperList: [
+        { id: '1', imgUrl: 'cloud://cloud1-2gp5ez590981c671.636c-cloud1-2gp5ez590981c671-1383410318/banner/banner1.png' },
+        { id: '2', imgUrl: 'cloud://cloud1-2gp5ez590981c671.636c-cloud1-2gp5ez590981c671-1383410318/banner/banner2.png' },
+        { id: '3', imgUrl: 'cloud://cloud1-2gp5ez590981c671.636c-cloud1-2gp5ez590981c671-1383410318/banner/banner3.png' },
+        { id: '4', imgUrl: 'cloud://cloud1-2gp5ez590981c671.636c-cloud1-2gp5ez590981c671-1383410318/banner/banner4.png' },
+        { id: '5', imgUrl: 'cloud://cloud1-2gp5ez590981c671.636c-cloud1-2gp5ez590981c671-1383410318/banner/banner5.png' },
+        { id: '6', imgUrl: 'cloud://cloud1-2gp5ez590981c671.636c-cloud1-2gp5ez590981c671-1383410318/banner/banner6.png' },
+        { id: '7', imgUrl: 'cloud://cloud1-2gp5ez590981c671.636c-cloud1-2gp5ez590981c671-1383410318/banner/banner7.png' }
+      ],
     importantNotice: '今日打卡规则调整：需完成定位打卡才有效',
     latestNotice: '逢简水乡非遗小程序正在部署中...',
     functionList: 
@@ -77,6 +85,7 @@ Page({
     const name = e.currentTarget.dataset.name;
     switch(name) {
       case '科普':
+        app.globalData.scienceTab = 'scenery'; 
         wx.switchTab({url: '/pages/science/science'});
         break;
       case '美食':

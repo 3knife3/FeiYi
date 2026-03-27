@@ -108,7 +108,7 @@
       </view>
       <view class="simple-map-container">
         <image 
-          src="../../images/map/new_map.png"
+          src="cloud://cloud1-2gp5ez590981c671.636c-cloud1-2gp5ez590981c671-1383410318/map/new_map.png"
           class="simple-map-img"
           mode="aspectFit"
           bindtouchstart="touchStart"

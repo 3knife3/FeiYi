@@ -1,3 +1,4 @@
+const app = getApp(); // 顶行加这个
 Page({
     data: {
       currentTab: "scenery",
@@ -30,9 +31,22 @@ Page({
         });
     },
   
-    onShow() {
-      this.loadDataFromDB();
-    },
+    
+  onShow() {
+    this.loadDataFromDB();
+
+    // 👇 这里是关键！！！
+    const activeTab = app.globalData.scienceTab;
+
+    if (activeTab) {
+      // 切换到对应栏目
+      this.setData({ currentTab: activeTab }, () => {
+        this.initBannerList();
+      });
+      // 清空，防止重复触发
+      app.globalData.scienceTab = "";
+    }
+  },
   
     initBannerList() {
       const { currentTab, bannerData } = this.data;

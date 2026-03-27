@@ -1,9 +1,9 @@
 const defaultAvatarUrl = '/images/login/DefaultAvatar.png'
+const app = getApp()
 
 Page({
     data: {
-      userInfo:
-      null,
+      userInfo:null,
       showContact: false,
       showLoginPopup: false,
       avatarUrl: defaultAvatarUrl, // 保留你原来的
@@ -36,9 +36,10 @@ Page({
         this.checkLogin()
         // +++++++++++++ 【新增】积分实时刷新 +++++++++++++
         this.setData({
-          userInfo: wx.getStorageSync('userInfo')
-        })
-      },
+            userInfo: wx.getStorageSync('userInfo'),
+            userScore: app.globalData.score
+          })
+        },
 
     // 检查登录
     checkLogin() {

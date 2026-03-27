@@ -14,7 +14,7 @@ App({
 
   globalData: {
     userInfo: null,
-    scienceTab: '',
+    scienceTab: 'scenery',
     // 打卡 9 个点位（所有页面共用）
     checkPoints: [
       { id: 1, name: "和之梁公祠", lat: 23.02882, lng: 113.14278, checked: false, score: 10 },
