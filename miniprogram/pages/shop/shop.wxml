@@ -34,10 +34,6 @@
       class="goods-item"
       wx:for="{{ list }}"
       wx:key="id"
-      bind:tap="showExchangeModal"
-      data-id="{{item.id}}"
-      data-cost="{{item.cost}}"
-      data-name="{{item.name}}"
     >
       <!-- 图片：直接放这里，完全不受 van 组件限制 -->
       <image
@@ -93,15 +89,25 @@
 </van-popup>
 
 <!-- 打卡弹窗 -->
-<van-popup show="{{ showCheckIn }}" position="center" round>
+<view class="check-popup" wx:if="{{showPopup}}">
+  <view class="popup-mask" bindtap="closePopup"></view>
   <view class="popup-content">
-    <view class="popup-close" bind:tap="closeCheckInPopup">x</view>
-    <view class="title">每日打卡</view>
-    <view class="desc">今日打卡可领 +20 积分</view>
-    <van-button type="warning" block bind:click="doCheckIn">立即打卡</van-button>
-    <view class="info">每日限1次|打卡后积分实时到账</view>
+    <view class="popup-title">景点打卡</view>
+    <view class="point-grid">
+      <view 
+        wx:for="{{points}}" 
+        wx:key="id"
+        data-index="{{index}}"
+        bindtap="checkPoint"
+        class="point-item {{item.checked ? 'active' : ''}}"
+      >
+        {{item.name}}
+      </view>
+    </view>
+    <view class="score-info">当前积分：{{userScore}}</view>
+    <button class="close-btn" bindtap="closePopup" type="primary">关闭</button>
   </view>
-</van-popup>
+</view>
 
 <button bindtap="handleUpload" type="primary">上传图片</button>
 <image wx:if="{{imageUrl}}" src="{{imageUrl}}" mode="widthFix" style="width: 100%; margin-top: 20rpx;" />

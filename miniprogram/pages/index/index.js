@@ -1,16 +1,11 @@
 // index.js
 // 引入全局上传工具函数
 const { uploadSingleImage } = require('../../utils/uploadImage.js');
+const app = getApp();
 
 Page({
   data: {
     mapUrl: "", // 页面显示用的临时地址
-    // swiperList: [
-    // {id: '1', imgUrl: '/images/banner/banner1.png'},
-    // {id: '2', imgUrl: '/images/banner/banner2.png'},
-    // {id: '3', imgUrl: '/images/banner/banner3.png'}
-    // ],
-
     swiperList: [], // 空的，我们从云函数拿Base64
     importantNotice: '今日打卡规则调整：需完成定位打卡才有效',
     latestNotice: '逢简水乡非遗小程序正在部署中...',
@@ -21,26 +16,11 @@ Page({
       {name: '娱乐', icon: '/images/function/entertainment.png'},
       {name: '路线推荐', icon: '/images/function/route.png'},
       {name: '打卡', icon: '/images/function/checkin.png'}
-    ]
+    ],
+    points: [],
+    userScore: 0,
+    showPopup: false
   },
-
-//   onLoad() {
-//     // 把云路径转成临时可访问路径
-//     const cloudUrl = "cloud://cloud1-2gp5ez590981c671.map/new_map.png";
-//     wx.cloud.getTempFileURL({
-//       fileList: [cloudUrl],
-//       success: (res) => {
-//         console.log("✅ 图片临时地址获取成功", res.fileList[0].tempFileURL);
-//         this.setData({
-//           mapUrl: res.fileList[0].tempFileURL
-//         });
-//       },
-//       fail: (err) => {
-//         console.error("❌ 获取图片地址失败", err);
-//       }
-//     });
-//   },
-
 
   // 获取轮播图（云存储 → Base64）
   getCloudBannerImages() {
@@ -75,14 +55,26 @@ Page({
   onLoad() {
     // 原来的地图
     this.getMapUrl();
-  
     // 👇 加上这一行！调用轮播图函数！
     this.getCloudBannerImages();
+    this.loadData();
+  },
+
+  onShow() {
+    this.setData({
+      userScore: app.globalData.score
+    })
+  },
+
+  loadData() {
+    this.setData({
+      points: app.globalData.checkPoints,
+      userScore: app.globalData.score
+    })
   },
 
   navigateToPage(e) {
     const name = e.currentTarget.dataset.name;
-    const app = getApp();
     switch(name) {
       case '科普':
         wx.switchTab({url: '/pages/science/science'});
@@ -102,12 +94,9 @@ Page({
       case '路线推荐':
         wx.navigateTo({url: '/pages/route/route'});
         break;
-      case '打卡':
-        wx.showToast({
-          title:"打卡成功！",
-          icon:"success"
-        });
-        break;
+        case '打卡':
+            this.openCheckPopup();
+            break;
       default:
         wx.showToast({title: '功能暂未开放', icon: 'none'});  
     }
@@ -116,7 +105,8 @@ Page({
   previewMap() {
     // 直接用你拿到的云存储外网地址
     const cloudImageUrl = "https://636c-cloud1-2gp5ez590981c671-1383410318.tcb.qcloud.la/map/new_map.png?sign=9124e499f4bd70946710d9ad4609472c&t=1774539541";
-  
+    const fs = wx.getFileSystemManager();
+
     wx.previewImage({
       current: cloudImageUrl,
       urls: [cloudImageUrl],
@@ -128,7 +118,6 @@ Page({
       }
     });
   },
-
 
 // 获取地图永久外网地址（公共读，直接显示）
 getMapUrl() {
@@ -143,6 +132,80 @@ getMapUrl() {
     console.log("✅ 地图使用永久外网地址：", permanentUrl);
   },
 
+  openCheckPopup() {
+    this.setData({
+      points: app.globalData.checkPoints,
+      userScore: app.globalData.score
+    });
+    this.setData({ showPopup: true });
+  },
+
+  closePopup() {
+    this.setData({ showPopup: false });
+  },
+
+// 打卡
+checkPoint(e) {
+    const index = e.currentTarget.dataset.index;
+    let points = this.data.points;  
+    const point = points[index];
+
+    if (point.checked) {
+      wx.showToast({ title: '已打卡', icon: 'none' });
+      return;
+    }
+
+    wx.showLoading({ title: '定位中...' });
+
+    wx.getLocation({
+      type: 'gcj02',
+      success: (res) => {
+        const nowLat = res.latitude;
+        const nowLng = res.longitude;
+        const distance = this.getDistance(point.lat, point.lng, nowLat, nowLng);
+
+        if (distance <= 100) {
+          points[index].checked = true;
+          const newScore = app.globalData.score + point.score;
+
+          // 全局更新
+          app.globalData.checkPoints = points;
+          app.globalData.score = newScore;
+
+          // 保存用户积分
+          const user = wx.getStorageSync('userInfo') || {}; 
+          user.score = newScore;
+          wx.setStorageSync('userInfo', user);
+
+          this.setData({ points, userScore: newScore });
+          wx.hideLoading();
+          wx.showToast({ title: `打卡成功+${point.score}分`, icon: 'success' });
+        } else {
+          wx.hideLoading();
+          wx.showToast({
+            title: `超出打卡范围！离${point.name}还有${distance}米`,
+            icon: 'none',
+            duration: 3000
+          });
+        }
+      },
+      fail: (err) => {
+        wx.hideLoading();
+        wx.showToast({ title: '定位失败', icon: 'none' });
+      }
+    });
+  },
+
+  getDistance(lat1, lng1, lat2, lng2) {
+    var radLat1 = lat1 * Math.PI / 180.0;
+    var radLat2 = lat2 * Math.PI / 180.0;
+    var a = radLat1 - radLat2;
+    var b = (lng1 - lng2) * Math.PI / 180.0;
+    var s = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(a / 2), 2) + Math.cos(radLat1) * Math.cos(radLat2) * Math.pow(Math.sin(b / 2), 2)));
+    s = s * 6378137;
+    return Math.round(s);
+  },
+
   handleUpload() {
     uploadSingleImage((fileID) => {
       // 上传完成后的回调逻辑（每个页面可自定义）
@@ -153,3 +216,4 @@ getMapUrl() {
     });
   }
 });
+
