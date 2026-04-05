@@ -22,11 +22,18 @@
     "miniprogram": {
       "list": [
         {
-          "name": "pages/a/a",
+          "name": "pages/science/science",
           "pathName": "pages/science/science",
           "query": "",
           "scene": null,
           "launchMode": "default"
+        },
+        {
+          "name": "pages/a/a",
+          "pathName": "pages/science/science",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }
