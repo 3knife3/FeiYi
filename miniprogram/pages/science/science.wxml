@@ -19,7 +19,7 @@
             bindtap="switchTab"
             data-tab="entertainment"
           >
-            娱乐</view>
+            特色</view>
     </view>
 
     <!-- 卡片列表 -->
@@ -41,8 +41,37 @@
     <view wx:if="{{showModal}}" class="long-modal" bindtap="closeLongImage">
         <scroll-view class="long-scroll" scroll-y>
             <image src="{{longImageUrl}}" class="long-img" mode="widthFix"></image>
-            
         </scroll-view>
+        <view class="quiz-btn" catchtap="openQuizModal">开始知识问答</view>
     </view>
     
+    <!-- 弹窗2：知识问答 -->
+<view wx:if="{{showQuizModal}}" class="quiz-modal" bindtap="closeQuizModal">
+  <view class="quiz-box" catchtap="voidClick">
+    <view class="quiz-title">{{currentQuiz.quizTitle}}</view>
+    <view class="quiz-question">{{currentQuiz.quizQuestion}}</view>
+
+    <view class="quiz-options">
+      <view 
+        wx:for="{{currentQuiz.quizOptions}}" 
+        wx:key="index" 
+        class="quiz-option {{selectedAnswer == index ? (Number(index) == currentQuiz.quizAnswer ? 'correct' : 'wrong') : ''}}"
+        data-index="{{index}}"
+        bindtap="checkAnswer"  
+      >
+        {{item}}
+      </view>
+    </view>
+
+    <!-- 答对/答错提示 -->
+    <view wx:if="{{selectedAnswer != null}}" class="quiz-result {{Number(selectedAnswer) == Number(currentQuiz['quizAnswer']) ? 'correct' : 'wrong'}}">
+</view>
+
+    <!-- 答案解析 -->
+    <view wx:if="{{selectedAnswer != null}}" class="quiz-explain">
+      {{currentQuiz.quizExplain}}
+    </view>
+  </view>
+</view>
+
 </view>

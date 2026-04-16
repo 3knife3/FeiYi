@@ -22,13 +22,19 @@
     "miniprogram": {
       "list": [
         {
+<<<<<<< HEAD
           "name": "pages/my/my",
           "pathName": "pages/my/my",
+=======
+          "name": "pages/science/science",
+          "pathName": "pages/science/science",
+>>>>>>> 4fe10ff3143ee0a11273af1240d57ef995b3d10c
           "query": "",
           "scene": null,
           "launchMode": "default"
         },
         {
+<<<<<<< HEAD
           "name": "pages/order/order",
           "pathName": "pages/order/order",
           "query": "",
@@ -50,6 +56,8 @@
           "scene": null
         },
         {
+=======
+>>>>>>> 4fe10ff3143ee0a11273af1240d57ef995b3d10c
           "name": "pages/a/a",
           "pathName": "pages/science/science",
           "query": "",

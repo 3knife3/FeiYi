@@ -6,7 +6,10 @@ Page({
       currentBanner: {},
       showModal: false,
       longImageUrl: "",
-      bannerData: {}
+      bannerData: {},
+      showQuizModal: false,   // 只加这一行
+      currentQuiz: {},  // <-- 加这一行
+      selectedAnswer: null // 新增：记录用户选择的答案索引
     },
   
     // 从云数据库加载数据
@@ -71,11 +74,52 @@ Page({
       
       this.setData({
         showModal: true,
-        longImageUrl: item.longImage // 这里用【长图地址】
+        longImageUrl: item.longImage, // 这里用【长图地址】
+        currentQuiz: item  // <-- 只加这一行
       });
     },
   
     closeLongImage() {
-      this.setData({ showModal: false, longImageUrl: "" });
-    }
+      this.setData({ 
+          showModal: false, 
+          longImageUrl: "",
+          showQuizModal: false  // 加这一句 
+        });
+    },
+
+    // 打开问答弹窗
+    openQuizModal() {
+        this.setData({ showQuizModal: true });
+    },
+  
+    // 关闭问答弹窗（点击背景关闭）
+    closeQuizModal() {
+        this.setData({ showQuizModal: false });
+    },
+  
+    // 禁止点击内容区关闭弹窗
+    voidClick() {},
+
+    // 新增：检查答案方法（完全符合你现有命名规范）
+    checkAnswer(e) {
+        if (this.data.selectedAnswer !== null) return;
+      
+        // 👇 调试输出（我加的，不影响功能）
+        console.log("===== 答题调试 =====");
+        const userIndex = parseInt(e.currentTarget.dataset.index);
+        const rightIndex = this.data.currentQuiz.quizAnswer;
+        console.log("用户选择：", userIndex, " 类型：", typeof userIndex);
+        console.log("正确答案：", rightIndex, " 类型：", typeof rightIndex);
+        console.log("是否相等：", userIndex === rightIndex);
+      
+        this.setData({
+          selectedAnswer: userIndex
+        });
+      
+        wx.showToast({
+          title: userIndex === rightIndex ? "回答正确 ✅" : "回答错误 ❌",
+          icon: userIndex === rightIndex ? "success" : "error",
+          duration: 1000
+        });
+      }
   });

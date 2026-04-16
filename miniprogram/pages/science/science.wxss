@@ -97,3 +97,70 @@
     display: block;
     border-radius: 70rpx;
   }
+  /* 悬浮按钮 */
+.quiz-btn {
+    position: fixed;
+    bottom: 80rpx;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #42b983;
+    color: #fff;
+    padding: 20rpx 50rpx;
+    border-radius: 50rpx;
+    z-index: 999;
+  }
+  
+  /* 弹窗2 背景遮罩 */
+  .quiz-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999999;
+  }
+  
+  /* 弹窗2 内容框 */
+  .quiz-box {
+    width: 80%;
+    background: #fff;
+    border-radius: 20rpx;
+    padding: 40rpx;
+  }
+  
+  .quiz-title {
+    font-size: 36rpx;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20rpx;
+  }
+  
+  .quiz-content {
+    font-size: 28rpx;
+    line-height: 1.6;
+  }
+  .quiz-question {
+    font-size: 30rpx;
+    margin: 20rpx 0;
+    text-align: center;
+  }
+  .quiz-options {
+    margin: 30rpx 0;
+  }
+  .quiz-option {
+    background: #f5f5f5;
+    padding: 20rpx;
+    margin: 15rpx 0;
+    border-radius: 10rpx;
+    text-align: center;
+  }
+  .quiz-explain {
+    font-size: 26rpx;
+    color: #666;
+    text-align: center;
+    margin-top: 20rpx;
+  }
