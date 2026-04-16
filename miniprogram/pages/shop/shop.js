@@ -5,7 +5,7 @@ Page({
     userScore: 0,
     points: [],
     showPopup: false,
-    notice: "积分商城正在部署中...",
+    notice: "全新商品兑换券正式推出,新用户赠送200积分!",
     showSign: false,
     showShare: false,
     showCheckIn: false,
@@ -15,12 +15,12 @@ Page({
     showModal: false,
     imageUrl: '',
     list: [
-      { id: 1, name: '保温杯', cost: 80, img: 'cloud://cloud1-2gp5ez590981c671.636c-cloud1-2gp5ez590981c671-1383410318/goods/thermal_mug.png' },
-      { id: 2, name: '数据线', cost: 150, img: 'cloud://cloud1-2gp5ez590981c671.636c-cloud1-2gp5ez590981c671-1383410318/goods/usb_table.png' },
-      { id: 3, name: '小风扇', cost: 200, img: 'cloud://cloud1-2gp5ez590981c671.636c-cloud1-2gp5ez590981c671-1383410318/goods/small_fan.png' },
-      { id: 4, name: '充电宝', cost: 300, img: 'cloud://cloud1-2gp5ez590981c671.636c-cloud1-2gp5ez590981c671-1383410318/goods/protable_charger.png' },
-      { id: 5, name: '耳机', cost: 500, img: 'cloud://cloud1-2gp5ez590981c671.636c-cloud1-2gp5ez590981c671-1383410318/goods/earphone.png' },
-      { id: 6, name: '蓝牙音箱', cost: 800, img: 'cloud://cloud1-2gp5ez590981c671.636c-cloud1-2gp5ez590981c671-1383410318/goods/bluetooth_speaker.png' }
+      { id: 1, name: '1元兑换券', cost: 100, img: 'cloud://cloud1-2gp5ez590981c671.636c-cloud1-2gp5ez590981c671-1383410318/exchange voucher/1yuan.png' },
+      { id: 2, name: '2元兑换券', cost: 200, img: 'cloud://cloud1-2gp5ez590981c671.636c-cloud1-2gp5ez590981c671-1383410318/exchange voucher/2yuan.png' },
+      { id: 3, name: '3元兑换券', cost: 300, img: 'cloud://cloud1-2gp5ez590981c671.636c-cloud1-2gp5ez590981c671-1383410318/exchange voucher/3yuan.png' },
+      { id: 4, name: '5元兑换券', cost: 500, img: 'cloud://cloud1-2gp5ez590981c671.636c-cloud1-2gp5ez590981c671-1383410318/exchange voucher/5yuan.png' },
+      { id: 5, name: '8元兑换券', cost: 800, img: 'cloud://cloud1-2gp5ez590981c671.636c-cloud1-2gp5ez590981c671-1383410318/exchange voucher/8yuan.png' },
+      { id: 6, name: '10元兑换券', cost: 1000, img: 'cloud://cloud1-2gp5ez590981c671.636c-cloud1-2gp5ez590981c671-1383410318/exchange voucher/10yuan.png' }
     ],
     rule: "兑换规则：积分可兑换对应商品，兑换后将在3个工作日内发货"
   },
@@ -36,20 +36,6 @@ Page({
     this.setData({
       userScore: app.globalData.score
     })
-  },
-
-  // 签到
-  showSign() {
-    if (!this.checkLogin()) return;
-    this.setData({ showSign: true });
-  },
-  closeSignPopup() {
-    this.setData({ showSign: false });
-  },
-  doSign() {
-    this.updateScore(50)
-    wx.showToast({ title: '签到成功 +50', icon: 'success' })
-    this.setData({ showSign: false })
   },
 
   // 分享
@@ -119,6 +105,7 @@ Page({
           this.setData({ points, userScore: newScore });
           wx.hideLoading();
           wx.showToast({ title: `打卡成功+${point.score}分`, icon: 'success' });
+          app.saveUserData()
         } else {
           wx.hideLoading();
           wx.showToast({
@@ -152,34 +139,55 @@ Page({
     this.setData({ userScore: newScore });
   },
   // 兑换商品
+  // 兑换商品
   exchangeGoods(e) {
     if (!this.checkLogin()) return;
-
+  
     const { id, name, cost } = e.currentTarget.dataset;
     const { userScore } = this.data;
-
-    // 积分不足
+  
     if (userScore < cost) {
-      wx.showToast({
-        title: '积分不足',
-        icon: 'error'
-      });
+      wx.showToast({ title: '积分不足', icon: 'error' });
       return;
     }
-
-    // 确认兑换
+  
     wx.showModal({
       title: '确认兑换',
       content: `确定要兑换【${name}】吗？\n消耗：${cost} 积分`,
       success: (res) => {
         if (res.confirm) {
-          // 扣除积分
           this.updateScore(-cost);
 
-          wx.showToast({
-            title: '兑换成功！',
-            icon: 'success'
-          });
+          let now = new Date();
+          let year = now.getFullYear();
+          let month = String(now.getMonth() + 1).padStart(2, '0');
+          let day = String(now.getDate()).padStart(2, '0');
+          let hour = String(now.getHours()).padStart(2, '0');
+          let minute = String(now.getMinutes()).padStart(2, '0');
+          let createTime = `${year}.${month}.${day} ${hour}:${minute}`;
+  
+          let newRecord = {
+            goodsName: name,
+            costScore: cost,
+            createTime: createTime
+          };
+  
+          // 👇 拿当前登录的用户名做唯一标识
+          const userInfo = wx.getStorageSync('userInfo');
+          const key = "orderList_" + (userInfo.name || "guest");
+  
+          // 读取当前用户的订单
+          let orderList = wx.getStorageSync(key) || [];
+          orderList.unshift(newRecord);
+  
+          // 保存
+          wx.setStorageSync(key, orderList);
+          app.globalData.orderList = orderList;
+          // ================================
+  
+          wx.showToast({ title: '兑换成功！', icon: 'success' });
+          // 兑换成功最后加一句
+          app.saveUserData()
         }
       }
     });
@@ -194,7 +202,8 @@ Page({
     this.setData({ userInfo });
     return true;
   },
+
   goDetail() {
     wx.navigateTo({ url: '../order/order' });
-  },
+  }
 });

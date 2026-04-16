@@ -1,1 +1,117 @@
 /* pages/order/order.wxss */
+/* 全局重置，避免默认样式干扰 */
+page {
+  background: #f5f5f7;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.container {
+  /* 减少左右内边距，给卡片留出更多宽度 */
+  padding: 24rpx 16rpx;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+/* 积分卡片：加宽、加大内边距，视觉更舒展 */
+.score-card {
+  background: #ffffff;
+  border-radius: 20rpx;
+  /* 左右内边距加大，卡片更宽 */
+  padding: 48rpx 40rpx;
+  margin-bottom: 24rpx;
+  text-align: center;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.06);
+  /* 宽度拉满，适配屏幕 */
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.score-title {
+  font-size: 28rpx;
+  color: #666666;
+  margin-bottom: 16rpx;
+}
+
+.score-num {
+  font-size: 64rpx;
+  font-weight: bold;
+  color: #ff6b00;
+  line-height: 1.2;
+}
+
+/* 兑换记录区域：同步加宽，和积分卡对齐 */
+.record-section {
+  background: #ffffff;
+  border-radius: 20rpx;
+  padding: 32rpx 40rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.06);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 24rpx;
+}
+
+/* 记录列表：适配加宽，间距更舒适 */
+.record-list {
+  width: 100%;
+}
+
+.record-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 28rpx 0;
+  border-bottom: 1rpx solid #f0f0f2;
+}
+
+.record-item:last-child {
+  border-bottom: none;
+}
+
+.item-left {
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+.goods-name {
+  font-size: 30rpx;
+  color: #1a1a1a;
+  font-weight: 500;
+}
+
+.goods-time {
+  font-size: 24rpx;
+  color: #999999;
+}
+
+.item-right {
+  font-size: 30rpx;
+  color: #ff3b30;
+  font-weight: 500;
+}
+
+/* 空状态：适配加宽，居中更美观 */
+.empty-tip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80rpx 0;
+  gap: 16rpx;
+}
+
+.empty-icon {
+  font-size: 64rpx;
+  opacity: 0.5;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: #999999;
+}

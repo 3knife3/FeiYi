@@ -1,0 +1,22 @@
+<!--pages/notice/notice.wxml-->
+<view class="container">
+  <!-- 公告列表 -->
+  <view class="card" wx:for="{{noticeList}}" wx:key="_id">
+    <view class="head">
+      <view class="bell">🔔</view>
+      <text class="date">{{item.dateStr}}</text>
+    </view>
+    <view class="title">{{item.title}}</view>
+    <view class="content">{{item.content}}</view>
+    <view class="foot">
+      <text>来源：开发者</text>
+    </view>
+  </view>
+
+  <!-- 加载状态 -->
+  <view class="load-box">
+    <view wx:if="{{loading}}" class="loading">加载中...</view>
+    <view wx:elif="{{hasMore}}" bindtap="loadMore" class="load-btn">加载更多</view>
+    <view wx:else class="no-more">已经到底啦~</view>
+  </view>
+</view>

@@ -42,6 +42,8 @@ Page({
         })
       },
 
+  
+
     // 检查登录
     checkLogin() {
       const userInfo = wx.getStorageSync('userInfo')
@@ -91,6 +93,7 @@ Page({
             showLoginPopup: false
           })
           wx.showToast({ title: '登录成功' })
+          app.loadUserData()
         } else {
           wx.showToast({ title: '登录失败', icon: 'none' })
         }
@@ -108,8 +111,10 @@ Page({
         success: (res) => {
           if (res.confirm) {
             wx.removeStorageSync('userInfo');
+            app.globalData.orderList = []; // 👈 清空订单
             this.setData({ userInfo: null });
             wx.showToast({ title: '已退出登录' })
+            app.loadUserData()
           }
         }
       });
@@ -121,7 +126,21 @@ Page({
           url: '/pages/order/order',
         })
     },
-
+    previewChip() {
+      // 直接用你的云存储路径
+      const cloudPath = "cloud://cloud1-2gp5ez590981c671.636c-cloud1-2gp5ez590981c671-1383410318/fragment/拼图1234.png";
+    
+      // 预览图片（微信自动处理云路径）
+      wx.previewImage({
+        current: cloudPath,
+        urls: [cloudPath],
+        fail: (err) => {
+          console.error("预览失败", err);
+          wx.showToast({ title: "预览失败", icon: "none" });
+        }
+      });
+    },
+  
     // 关于我们
     showContact(){
         this.setData({

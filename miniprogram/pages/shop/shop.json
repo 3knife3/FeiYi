@@ -5,5 +5,6 @@
     "van-button": "@vant/weapp/button/index",
     "van-popup": "@vant/weapp/popup/index",
     "van-notice-bar": "@vant/weapp/notice-bar/index"
-  }
+  },
+  "navigationBarTitleText": "商城"
 }

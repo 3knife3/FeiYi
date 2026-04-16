@@ -21,7 +21,6 @@
 
 <!-- 任务栏 -->
 <view class="task-wrap">
-  <van-button type="primary" plain size="small" bind:click="showSign">每日签到</van-button>
   <van-button type="warning" plain size="small" bind:click="openCheckPopup">打卡得积分</van-button>
   <van-button type="info" plain size="small" bind:click="showShare">分享得积分</van-button>
 </view>
@@ -34,7 +33,7 @@
       wx:for="{{ list }}"
       wx:key="id"
       data-id="{{ item.id }}"
-      data-name="{{ item.name }}"
+      data-name="{{ item.name }}" 
       data-cost="{{ item.cost }}"
       bindtap="exchangeGoods"
     >
@@ -52,25 +51,14 @@
 <!-- 规则 -->
 <view class="rule">{{rule}}</view>
 
-<!-- 签到弹窗 -->
-<van-popup show="{{ showSign }}" position="center" round>
-  <view class="popup-content">
-    <view class="popup-close" bind:tap="closeSignPopup">x</view>
-    <view class="title">每日签到</view>
-    <view class="desc">今日可领 +50 积分</view>
-    <van-button type="primary" block bind:click="doSign">立即签到</van-button>
-    <view class="info">连续签到: 1天+50|3天+80|7天+150</view>
-  </view>
-</van-popup>
-
 <!-- 分享弹窗 -->
-<van-popup show="{{ showShare }}" position="center" round>
-  <view class="popup-content share-card">
+<van-popup show="{{ showShare }}" position="center" round custom-style="width: 80%;">
+  <view class="share-card">
     <view class="popup-close" bind:tap="closeSharePopup">×</view>
     <view class="title">分享好友</view>
     <view class="desc">分享成功 +30 积分（每日1次）</view>
-    <van-button type="info" block open-type="share">分享给好友</van-button>
-    <view class="info">好友打开即可获得积分</view>
+    <van-button type="info" block open-type="share" style="margin-top: 10rpx;">分享给好友</van-button>
+    <view class="tip">好友打开即可获得积分</view>
   </view>
 </van-popup>
 

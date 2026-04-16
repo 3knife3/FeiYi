@@ -1,109 +1,123 @@
 /* pages/login/login.wxss */
 page {
-    background-color: #f7f8fa;
-    margin: 0;
-    padding: 0;
-  }
-  
-  /* 全屏容器 */
-  .container {
-    width: 100%;
-    min-height: 100vh;
-    box-sizing: border-box;
-    margin: 0 auto;
-  }
-  
-  /* 未登录：横向 flex + 全屏宽 + 可点击 */
-  .login-before {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    padding: 30rpx 40rpx;
-    box-sizing: border-box;
-    background: #fff;
-    margin-bottom: 20rpx;
-  }
-  
-  .avatar-default {
-    width: 130rpx;
-    height: 130rpx;
-    border-radius: 100%;
-    margin-right: 24rpx;
-    background: #f2f3f5;
-  }
-  
-  .login-text {
-    font-size: 42rpx;
-    color: #333;
-  }
-  
-  /* 登录后卡片 */
-  .user-info-card {
-    background: white;
-    width: 100%;
-    box-sizing: border-box;
-    padding: 36rpx 40rpx;
-    margin-bottom: 20rpx;
-  }
-  
-  .user-row {
-    display: flex;
-    align-items: center;
-  }
-  
-  .avatar-user {
-    width: 130rpx;
-    height: 130rpx;
-    border-radius: 100%;
-    margin-right: 24rpx;
-  }
-  
-  .user-name {
-    font-size: 42rpx;
-    font-weight: 500;
-    color: #333;
-  }
-  
-  .logout-txt {
-    color: #666;
-    font-size: 42rpx;
-  }
-  
-  .user-data {
-    display: flex;
-    justify-content: space-around;
-    border-top: 1rpx solid #f2f3f5;
-    padding-top: 30rpx;
-    margin-top: 30rpx;
-  }
-  
-  .data-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .data-num {
-    font-size: 40rpx;
-    font-weight: bold;
-    color: #1677ff;
-  }
-  
-  .data-label {
-    font-size: 26rpx;
-    color: #999;
-    margin-top: 6rpx;
-  }
-  
-  /* 菜单全屏 */
-  .menu-list {
-    width: 100%;
-    background: white;
-  }
-  
-  .menu-item {
-    padding: 30rpx 40rpx;
-    font-size: 30rpx;
-  }
+  background-color: #f7f8fa;
+  margin: 0;
+  padding: 0;
+}
+
+/* 全屏容器 */
+.container {
+  width: 100%;
+  min-height: 100vh;
+  box-sizing: border-box;
+  margin: 0 auto;
+}
+
+/* 未登录：横向 flex + 全屏宽 + 可点击 */
+.login-before {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 30rpx 40rpx;
+  box-sizing: border-box;
+  background: #fff;
+  margin-bottom: 20rpx;
+}
+
+.avatar-default {
+  width: 130rpx;
+  height: 130rpx;
+  border-radius: 100%;
+  margin-right: 24rpx;
+  background: #f2f3f5;
+}
+
+.login-text {
+  font-size: 38rpx;
+  color: #333;
+  margin-left: 20rpx;
+}
+
+/* 登录后卡片 */
+.user-info-card {
+  background: white;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 36rpx 40rpx;
+  margin-bottom: 20rpx;
+}
+
+.user-row {
+  display: flex;
+  align-items: center;
+}
+
+.avatar-user {
+  width: 130rpx;
+  height: 130rpx;
+  border-radius: 100%;
+  margin-right: 24rpx;
+}
+
+.user-name {
+  font-size: 42rpx;
+  font-weight: 500;
+  color: #333;
+}
+
+.logout-txt {
+  color: #666;
+  font-size: 42rpx;
+}
+
+/* 核心调整：积分 + 碎片 完全对称 */
+.user-data {
+  display: flex;
+  justify-content: space-around;
+  border-top: 1rpx solid #f2f3f5;
+  padding-top: 30rpx;
+  margin-top: 30rpx;
+}
+
+.data-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* 让两个 item 高度一致，对称对齐 */
+  min-height: 120rpx;
+  justify-content: center;
+}
+
+.data-num {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #1677ff;
+}
+
+.data-label {
+  font-size: 26rpx;
+  color: #999;
+  margin-top: 6rpx;
+}
+
+/* 菜单全屏 */
+.menu-list {
+  width: 100%;
+  background: white;
+}
+
+.menu-item {
+  padding: 30rpx 40rpx;
+  font-size: 30rpx;
+}
+
+/* 碎片小图标：对齐文字，保持对称 */
+.chip-icon {
+  width: 45rpx;
+  height: 45rpx;
+  margin-top: 8rpx;
+  /* 让图片居中，不偏移 */
+  display: block;
+}

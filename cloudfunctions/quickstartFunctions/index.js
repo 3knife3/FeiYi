@@ -4,12 +4,12 @@ cloud.init({
 });
 
 const db = cloud.database();
-// 获取openid
-const getOpenId = async () => {
+// 获取OPENID
+const getOPENID = async () => {
   // 获取基础信息
   const wxContext = cloud.getWXContext();
   return {
-    openid: wxContext.OPENID,
+    OPENID: wxContext.OPENID,
     appid: wxContext.APPID,
     unionid: wxContext.UNIONID,
   };
@@ -157,7 +157,7 @@ const deleteRecord = async (event) => {
   }
 };
 
-// const getOpenId = require('./getOpenId/index');
+// const getOPENID = require('./getOPENID/index');
 // const getMiniProgramCode = require('./getMiniProgramCode/index');
 // const createCollection = require('./createCollection/index');
 // const selectRecord = require('./selectRecord/index');
@@ -167,8 +167,8 @@ const deleteRecord = async (event) => {
 // 云函数入口函数
 exports.main = async (event, context) => {
   switch (event.type) {
-    case "getOpenId":
-      return await getOpenId();
+    case "getOPENID":
+      return await getOPENID();
     case "getMiniProgramCode":
       return await getMiniProgramCode();
     case "createCollection":

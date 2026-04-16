@@ -3,6 +3,7 @@ const app = getApp();
 
 Page({
   data: {
+    mapUrl: "", // 页面显示用的临时地址
     swiperList: [
       { id: '1', imgUrl: 'cloud://cloud1-2gp5ez590981c671.636c-cloud1-2gp5ez590981c671-1383410318/banner/banner1.png' },
       { id: '2', imgUrl: 'cloud://cloud1-2gp5ez590981c671.636c-cloud1-2gp5ez590981c671-1383410318/banner/banner2.png' },
@@ -55,6 +56,12 @@ Page({
     this.setData({ showPopup: false });
   },
 
+  goNotice() {
+    wx.navigateTo({
+      url: '/pages/notice/notice'
+    })
+  },
+
   navigateToPage(e) {
     const name = e.currentTarget.dataset.name;
     const app = getApp();
@@ -101,44 +108,55 @@ Page({
     const index = e.currentTarget.dataset.index;
     let points = this.data.points;  
     const point = points[index];
-
+  
     if (point.checked) {
       wx.showToast({ title: '已打卡', icon: 'none' });
       return;
     }
-
+  
     wx.showLoading({ title: '定位中...' });
-
+  
     wx.getLocation({
       type: 'gcj02',
       success: (res) => {
+        // 自己的经纬度
         const nowLat = res.latitude;
         const nowLng = res.longitude;
-        const distance = this.getDistance(point.lat, point.lng, nowLat, nowLng);
-
+  
+        const targetLat = point.lat;
+        const targetLng = point.lng;
+  
+        const distance = this.getDistance(targetLat, targetLng, nowLat, nowLng);
+  
         if (distance <= 100) {
           points[index].checked = true;
           const newScore = app.globalData.score + point.score;
-
-          // 全局更新
+  
           app.globalData.checkPoints = points;
           app.globalData.score = newScore;
-
-          // 保存用户积分
+  
           const user = wx.getStorageSync('userInfo') || {}; 
           user.score = newScore;
           wx.setStorageSync('userInfo', user);
-
+  
           this.setData({ points, userScore: newScore });
           wx.hideLoading();
-          wx.showToast({ title: `打卡成功+${point.score}分`, icon: 'success' });
+  
+          // 直接显示原始经纬度，不做四舍五入
+          wx.showModal({
+            title: '打卡成功',
+            content: `+${point.score}分\n你的经纬度：` + nowLat + ', ' + nowLng,
+            showCancel: false
+          });
+          app.saveUserData()
         } else {
           wx.hideLoading();
-          wx.showToast({
-            title: `超出打卡范围！离${point.name}还有${distance}米`,
-            icon: 'none',
-            duration: 3000
-          });
+          wx.showModal({
+            title: `超出打卡范围！还有${distance}米`,
+            content: `你的经纬度：` + nowLat + ', ' + nowLng,
+            showCancel: false, 
+            confirmText: "我知道了", 
+          })
         }
       },
       fail: (err) => {

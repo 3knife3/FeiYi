@@ -41,6 +41,7 @@
     <view wx:if="{{showModal}}" class="long-modal" bindtap="closeLongImage">
         <scroll-view class="long-scroll" scroll-y>
             <image src="{{longImageUrl}}" class="long-img" mode="widthFix"></image>
+            
         </scroll-view>
     </view>
     

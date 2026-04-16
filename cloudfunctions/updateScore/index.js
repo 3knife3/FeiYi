@@ -3,10 +3,10 @@ cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV })
 const db = cloud.database()
 
 exports.main = async (event) => {
-  const { openid, changeScore } = event
+  const { OPENID, changeScore } = event
 
   try {
-    const userRes = await db.collection('users').where({ OPENID: openid }).get()
+    const userRes = await db.collection('users').where({ OPENID: OPENID }).get()
     if (userRes.data.length === 0) return { code: -1 }
 
     const user = userRes.data[0]

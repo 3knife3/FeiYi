@@ -1,20 +1,32 @@
 // pages/order/order.js
+const app = getApp()
+
 Page({
-    data: { userInfo: null, list: [] },
-  
-    onLoad() {
-      this.setData({ userInfo: wx.getStorageSync('userInfo') })
-      this.getList()
-    },
-  
-    getList() {
-      const user = this.data.userInfo
-      if (!user) return
-      wx.cloud.callFunction({
-        name: 'getOrders',
-        data: { openid: user.OPENID }
-      }).then(res => {
-        this.setData({ list: res.result.data })
-      })
+  data: {
+    userInfo: null,
+    list: []
+  },
+
+  onLoad() {
+    let userInfo = wx.getStorageSync('userInfo') || {}
+    userInfo.score = app.globalData.score || 0
+    this.setData({ userInfo })
+    this.getList()
+  },
+
+  // ✅ 只加载当前用户自己的订单
+  getList() {
+    const userInfo = wx.getStorageSync('userInfo')
+    if (!userInfo || !userInfo.name) {
+      this.setData({ list: [] })
+      return
     }
-  })
+
+    const key = "orderList_" + userInfo.name
+    const myOrders = wx.getStorageSync(key) || []
+    
+    this.setData({
+      list: myOrders
+    })
+  }
+})

@@ -1,48 +1,53 @@
+const app = getApp(); // 顶行加这个
 Page({
     data: {
       currentTab: "scenery",
       bannerList: [],
       currentBanner: {},
       showModal: false,
-      longImageUrl: ""
+      longImageUrl: "",
+      bannerData: {}
     },
   
+    // 从云数据库加载数据
     loadDataFromDB() {
-        const db = wx.cloud.database();
-    
-        db.collection("science") // 你的数据库集合名
-          .where({ isShow: true })
-          .get()
-          .then(res => {
-            let list = res.data;
-    
-            // 自动按 type 分类
-            let bannerData = {
-              scenery: list.filter(i => i.type === "scenery"),
-              food: list.filter(i => i.type === "food"),
-              entertainment: list.filter(i => i.type === "entertainment")
-            };
-    
-            this.setData({
-              bannerData: bannerData
-            }, () => {
-              this.initBannerList();
-            });
-          });
-      },
-
-    // 首页快捷键跳转栏目函数
-    onShow() {
-        const app = getApp() || {};
-        const targetTab = (app.globalData && app.globalData.scienceTab) || "scenery";
-        this.setData({
-          currentTab: targetTab
-        }, () => {
-          this.loadDataFromDB();
-        });
-      },
+      const db = wx.cloud.database();
   
-    // 标签跳转函数
+      db.collection("science")
+        .where({ isShow: true })
+        .get()
+        .then(res => {
+          let list = res.data;
+  
+          let bannerData = {
+            scenery: list.filter(i => i.type === "scenery"),
+            food: list.filter(i => i.type === "food"),
+            entertainment: list.filter(i => i.type === "entertainment")
+          };
+  
+          this.setData({ bannerData }, () => {
+            this.initBannerList();
+          });
+        });
+    },
+  
+    
+  onShow() {
+    this.loadDataFromDB();
+
+    // 👇 这里是关键！！！
+    const activeTab = app.globalData.scienceTab;
+
+    if (activeTab) {
+      // 切换到对应栏目
+      this.setData({ currentTab: activeTab }, () => {
+        this.initBannerList();
+      });
+      // 清空，防止重复触发
+      app.globalData.scienceTab = "";
+    }
+  },
+  
     initBannerList() {
       const { currentTab, bannerData } = this.data;
       const currentData = bannerData[currentTab] || [];
@@ -51,52 +56,26 @@ Page({
         currentBanner: currentData[0] || {}
       });
     },
-//   点击栏目标签之后跳转
+  
     switchTab(e) {
       const tab = e.currentTarget.dataset.tab;
-      this.setData({
-        currentTab: tab
-      }, () => {
+      this.setData({ currentTab: tab }, () => {
         this.initBannerList();
       });
     },
   
-    // 滑动轮播图片跳转（保留，不影响）
-    onSwiperChange(e) {
-      const index = e.detail.current;
-      const { bannerList } = this.data;
-      if (bannerList[index]) {
-        this.setData({
-          currentBanner: bannerList[index]
-        });
-      }
-    },
-
-    //弹窗打开
+    // ✅ 打开详情长图（单独的 longImage 地址）
     openLongImage(e) {
-        const id = e.currentTarget.dataset.id;
-        const { bannerList } = this.data;
-        const item = bannerList.find(i => i.id === id);
-
-        console.log("长图地址 =", item?.longImage); // 👈 大写 L
+      const id = e.currentTarget.dataset.id;
+      const item = this.data.bannerList.find(i => i.id === id);
       
-        if (!item || !item.longImage) {
-            wx.showToast({ title: '暂无长图介绍', icon: 'none' });
-            return;
-          }
-        
-          // 直接赋值本地路径，去掉所有云调用代码
-          this.setData({
-            showModal: true,
-            longImageUrl: item.longImage
-          });
-        },
+      this.setData({
+        showModal: true,
+        longImageUrl: item.longImage // 这里用【长图地址】
+      });
+    },
   
-    // 弹窗关闭
-  closeLongImage() {
-    this.setData({
-      showModal: false,
-      longImageUrl: ""
-    });
-  }
-})
+    closeLongImage() {
+      this.setData({ showModal: false, longImageUrl: "" });
+    }
+  });

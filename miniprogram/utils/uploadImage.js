@@ -1,3 +1,7 @@
+// <<<<<<< HEAD
+// // 空文件，只为解决编译报错
+// module.exports = {}
+// =======
 // utils/uploadImage.js
 /**
  * 单张图片上传工具函数
@@ -62,3 +66,4 @@ function uploadSingleImage(callback) {
 module.exports = {
   uploadSingleImage
 };
+// >>>>>>> ccb2b241ae8401190513d46d5ee7f7688be99e6a

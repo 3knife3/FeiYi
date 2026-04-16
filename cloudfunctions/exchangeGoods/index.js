@@ -3,10 +3,10 @@ cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV })
 const db = cloud.database()
 
 exports.main = async (event) => {
-  const { openid, goodsId, goodsName, costScore } = event
+  const { OPENID, goodsId, goodsName, costScore } = event
 
   try {
-    const userRes = await db.collection('users').where({ OPENID: openid }).get()
+    const userRes = await db.collection('users').where({ OPENID: OPENID }).get()
     const user = userRes.data[0]
     if (user.score < costScore) return { code: -1, msg: '积分不足' }
 
@@ -17,7 +17,7 @@ exports.main = async (event) => {
 
     await db.collection('orders').add({
       data: {
-        openid, goodsId, goodsName, costScore,
+        OPENID, goodsId, goodsName, costScore,
         createTime: new Date()
       }
     })

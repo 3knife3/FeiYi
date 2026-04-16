@@ -1,12 +1,28 @@
 <!--pages/order/order.wxml-->
 <view class="container">
-  <view class="score-info">当前积分：{{userInfo.score}}</view>
+  <!-- 积分卡片 -->
+  <view class="score-card">
+    <view class="score-title">我的积分</view>
+    <view class="score-num">{{userInfo ? userInfo.score : 0}}</view>
+  </view>
 
-  <view class="order-list">
-    <view wx:for="{{list}}" wx:key="_id" class="order-item">
-      <view>{{item.goodsName}}</view>
-      <view style="color:red">-{{item.costScore}} 分</view>
+  <!-- 兑换记录区域 -->
+  <view class="record-section">
+    <view class="section-title">兑换记录</view>
+    
+    <view class="record-list" wx:if="{{list.length > 0}}">
+      <view class="record-item" wx:for="{{list}}" wx:key="_id">
+        <view class="item-left">
+          <view class="goods-name">{{item.goodsName}}</view>
+          <view class="goods-time">{{item.createTime || ''}}</view>
+        </view>
+        <view class="item-right">-{{item.costScore}} 分</view>
+      </view>
     </view>
-    <view wx:if="{{list.length===0}}" class="empty">暂无兑换记录</view>
+
+    <view class="empty-tip" wx:else>
+      <view class="empty-icon">📭</view>
+      <view class="empty-text">暂无兑换记录</view>
+    </view>
   </view>
 </view>

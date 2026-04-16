@@ -188,70 +188,130 @@
   color: #999;
 }
 
-/* 分享弹窗 */
+/* 分享弹窗 美化升级 */
+/*  you 分享弹窗  */
 .share-card {
-  padding: 60rpx 40rpx;
+  padding: 50rpx 35rpx !important;
+  text-align: center !important;
+  box-sizing: border-box !important;
+  position: relative !important;
 }
+
+/* 关闭按钮 */
+.share-card .popup-close {
+  position: absolute !important;
+  top: 25rpx !important;
+  right: 30rpx !important;
+  font-size: 40rpx !important;
+  color: #888 !important;
+}
+
+/* 标题 */
 .share-card .title {
-  color: #1677ff;
-  font-weight: 800;
+  font-size: 44rpx !important;
+  font-weight: bold !important;
+  color: #1677ff !important;
+  margin-bottom: 25rpx !important;
 }
+
+/* 描述 */
 .share-card .desc {
-  color: #555;
+  font-size: 28rpx !important;
+  color: #555 !important;
+  margin-bottom: 35rpx !important;
+  line-height: 1.6 !important;
+}
+
+/* 底部小字 */
+.share-card .tip {
+  font-size: 23rpx !important;
+  color: #999 !important;
+  margin-top: 20rpx !important;
 }
 
 /* 打卡弹窗 */
-
 .check-popup {
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 9999;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
 }
+
+/* 半透明背景 */
 .popup-mask {
   position: absolute;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.6);
+  background: rgba(0, 0, 0, 0.45);
 }
-.check-popup .popup-content {
+
+/* 弹窗主体 */
+.popup-content {
+  width: 88%;
+  background: #ffffff;
+  border-radius: 28rpx;
+  padding: 50rpx 40rpx;
+  box-sizing: border-box;
   position: relative;
-  width: 90%;
-  margin: 120rpx auto 0;
-  background: #fff;
-  border-radius: 24rpx;
-  padding: 40rpx;
+  box-shadow: 0 8rpx 30rpx rgba(0, 0, 0, 0.15);
 }
-.check-popup .popup-title {
-  font-size: 36rpx;
+
+/* 标题 */
+.popup-title {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #333;
   text-align: center;
-  margin-bottom: 30rpx;
+  margin-bottom: 40rpx;
 }
+
+/* 景点网格布局（3列 对称美观） */
 .point-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
   gap: 20rpx;
 }
+
+/* 单个景点按钮 */
 .point-item {
-  height: 120rpx;
-  background: #f2f2f2;
-  border-radius: 16rpx;
+  width: 31%;
+  height: 88rpx;
+  background: #f7f8fa;
+  border-radius: 20rpx;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 28rpx;
+  color: #666;
+  box-sizing: border-box;
 }
+
+/* 已打卡样式（绿色） */
 .point-item.active {
-  background: #09BB07;
+  background: #1677ff;
   color: #fff;
 }
+
+/* 积分信息 */
 .score-info {
   text-align: center;
-  margin: 30rpx 0;
   font-size: 28rpx;
+  color: #1677ff;
+  margin: 36rpx 0 20rpx;
+  font-weight: 500;
 }
+
+/* 关闭按钮 */
 .close-btn {
   width: 100%;
+  height: 80rpx;
+  border-radius: 20rpx;
+  font-size: 32rpx;
+  margin-top: 10rpx;
 }

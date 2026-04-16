@@ -15,9 +15,9 @@
   <view class="user-info-card">
     <view class="user-profile">
       <view class="user-row">
-        <image class="avatar-user" src="{{userInfo.avatar}}"></image>
+        <image class="avatar-user" src="{{userInfo.avatar}}" bind:tap="logout"></image>
         <view class="user-name">
-          <view bind:tap="logout" class="logout-txt">{{userInfo.name}}</view>
+          <view class="logout-txt">{{userInfo.name}}</view>
         </view>
       </view>
     </view>
@@ -29,10 +29,25 @@
       </view>
       <view class="data-item">
         <text class="data-label">碎片</text>
+        <image 
+          class="chip-icon" 
+          src="cloud://cloud1-2gp5ez590981c671.636c-cloud1-2gp5ez590981c671-1383410318/fragment/拼图1234.png"
+          mode="widthFix"
+          bind:tap="previewChip"
+          ></image>
       </view>
     </view>
   </view>
 </block>
+
+<!-- 
+<view class="map-box">
+  <text class="map-title">地图区域</text>
+  <view class="map-preview" bindtap="previewMap">
+    <image class="map-img" src="cloud://cloud1-2gp5ez590981c671.636c-cloud1-2gp5ez590981c671-1383410318/map/new_map.png"></image>
+    <text class="map-tip">点击放大</text>
+  </view>
+</view> -->
 
 <!-- 选项 -->
 <view class="menu-list">
